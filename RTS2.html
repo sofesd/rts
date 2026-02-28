@@ -1,0 +1,1630 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Returned To Sender | Write now. Open later.</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Iconify (using Solar icons to match style) -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Alpine.js -->
+    <script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+
+    <script>
+      tailwind.config = {
+          darkMode: 'class',
+          theme: {
+              fontFamily: {
+                  sans: ['Inter', 'sans-serif'],
+              },
+              extend: {
+                  colors: {
+                      brand: {
+                          50: 'rgba(var(--color-brand-50), <alpha-value>)',
+                          100: 'rgba(var(--color-brand-100), <alpha-value>)',
+                          200: 'rgba(var(--color-brand-200), <alpha-value>)',
+                          300: 'rgba(var(--color-brand-300), <alpha-value>)',
+                          400: 'rgba(var(--color-brand-400), <alpha-value>)',
+                          500: 'rgba(var(--color-brand-500), <alpha-value>)',
+                          600: 'rgba(var(--color-brand-600), <alpha-value>)',
+                          700: 'rgba(var(--color-brand-700), <alpha-value>)',
+                          800: 'rgba(var(--color-brand-800), <alpha-value>)',
+                          900: 'rgba(var(--color-brand-900), <alpha-value>)',
+                          950: 'rgba(var(--color-brand-950), <alpha-value>)',
+                      }
+                  },
+                  animation: {
+                      'fade-in': 'fadeIn 0.5s ease-out forwards',
+                      'slide-up': 'slideUp 0.4s ease-out forwards',
+                      'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                      'shimmer': 'shimmer 2s linear infinite',
+                      'spin-slow': 'spin 12s linear infinite',
+                  },
+                  keyframes: {
+                      fadeIn: {
+                          '0%': { opacity: '0' },
+                          '100%': { opacity: '1' },
+                      },
+                      slideUp: {
+                          '0%': { opacity: '0', transform: 'translateY(20px)' },
+                          '100%': { opacity: '1', transform: 'translateY(0)' },
+                      },
+                      shimmer: {
+                          '0%': { backgroundPosition: '-200% 0' },
+                          '100%': { backgroundPosition: '200% 0' },
+                      }
+                  }
+              }
+          }
+      }
+    </script>
+
+    <style>
+      :root {
+          --color-brand-50: 250, 245, 255;
+          --color-brand-100: 243, 232, 255;
+          --color-brand-200: 233, 213, 255;
+          --color-brand-300: 216, 180, 254;
+          --color-brand-400: 192, 132, 252;
+          --color-brand-500: 168, 85, 247;
+          --color-brand-600: 147, 51, 234;
+          --color-brand-700: 126, 34, 206;
+          --color-brand-800: 107, 33, 168;
+          --color-brand-900: 88, 28, 135;
+          --color-brand-950: 59, 7, 100;
+      }
+
+      body {
+          background-color: #020617;
+          color: #e2e8f0;
+          -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Glassmorphism */
+      .glass {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .glass-hover:hover {
+          background: rgba(255, 255, 255, 0.07);
+          border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .glass-active:active {
+          background: rgba(255, 255, 255, 0.05);
+          transform: scale(0.98);
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 6px; background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      /* Ensure proper scrolling behavior */
+      html, body {
+          overflow-x: hidden;
+          width: 100%;
+          height: 100%;
+          -webkit-user-select: text;
+          -webkit-touch-callout: default;
+      }
+      
+      /* Touch-friendly button hover states */
+      @media (hover: none) and (pointer: coarse) {
+          button:active {
+              opacity: 0.7;
+              transform: scale(0.98);
+          }
+      }
+
+      /* Toggles */
+      .toggle-checkbox:checked { right: 0; border-color: rgb(var(--color-brand-500)); }
+      .toggle-checkbox:checked + .toggle-label { background-color: rgb(var(--color-brand-500)); }
+
+      /* Switch Toggle Styles */
+      .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 24px;
+      }
+
+      .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+      }
+
+      .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(255, 255, 255, 0.1);
+          transition: 0.4s;
+          border-radius: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 2px;
+          background-color: white;
+          transition: 0.4s;
+          border-radius: 50%;
+      }
+
+      input:checked + .slider {
+          background-color: rgb(var(--color-brand-500));
+          border-color: rgb(var(--color-brand-500));
+      }
+
+      input:checked + .slider:before {
+          transform: translateX(26px);
+      }
+
+      .slider:hover {
+          background-color: rgba(255, 255, 255, 0.15);
+      }
+
+      input:checked + .slider:hover {
+          background-color: rgb(var(--color-brand-600));
+      }
+
+      .locked-shimmer {
+          background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+          background-size: 200% 100%;
+          animation: shimmer 3s infinite linear;
+      }
+
+      @keyframes fadeInScale {
+          from {
+              opacity: 0;
+              transform: scale(0.95);
+          }
+          to {
+              opacity: 1;
+              transform: scale(1);
+          }
+      }
+
+      /* Minimum touch target size for accessibility */
+      button, input, textarea, [role="button"] {
+          min-height: 44px;
+          min-width: 44px;
+          font-size: 16px; /* Prevents zoom on input focus on iOS */
+      }
+
+      /* Better spacing on mobile */
+      @media (max-width: 640px) {
+          button, input, textarea {
+              min-height: 48px;
+          }
+      }
+
+      /* Safe area support for notched devices */
+      .safe-area-inset-top {
+          padding-top: max(1rem, env(safe-area-inset-top));
+      }
+
+      .safe-area-inset-bottom {
+          padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+      }
+
+      /* Custom utility classes for mobile optimization */
+      .min-touch-target {
+          min-height: 44px;
+          min-width: 44px;
+      }
+
+      .touch-manipulation {
+          touch-action: manipulation;
+      }
+
+      /* Set 16px font size on inputs to prevent zoom on iOS */
+      input[type=\"text\"],
+      input[type=\"email\"],
+      input[type=\"password\"],
+      textarea {
+          font-size: 16px;
+      }
+
+      /* Ensure all buttons have proper font size */
+      button {
+          font-size: 16px;
+      }
+
+      @media (max-width: 640px) {
+          button,
+          input[type=\"text\"],
+          input[type=\"email\"],
+          textarea {
+              min-height: 48px;
+          }
+      }
+
+    </style>
+</head>
+<body class="antialiased min-h-screen relative overflow-x-hidden overflow-y-auto selection:bg-brand-500/30 selection:text-white transition-colors duration-500" x-data="appData()" x-init="initApp()" :class="user.solidBackground ? 'bg-slate-950' : 'bg-[#020617]'" style="background-color: var(--color-bg-main); -webkit-font-smoothing: antialiased;">
+      <!-- Onboarding Screen -->
+      <div x-show="view === 'onboarding'" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-8 bg-slate-950/95 backdrop-blur-xl text-center">
+        <div class="mb-8 relative group">
+          <div class="absolute inset-0 bg-brand-500 rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
+          <div class="relative w-16 h-16 rounded-2xl glass flex items-center justify-center text-brand-300">
+            <iconify-icon icon="solar:pen-new-square-linear" width="32" stroke-width="1.5"></iconify-icon>
+          </div>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-2 animate-slide-up">
+          Welcome to Returned To Sender
+        </h1>
+        <p class="text-slate-400 text-sm mb-10 tracking-tight animate-slide-up" style="animation-delay: 100ms">
+          A space for your future self.
+        </p>
+
+        <div class="w-full space-y-4 animate-slide-up max-w-xs" style="animation-delay: 200ms">
+          <div class="relative">
+            <label class="block text-xs text-slate-500 mb-2 font-medium ml-1">
+              What should we call you?
+            </label>
+            <input type="text" x-model="tempName" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/50 transition-all text-sm" placeholder="Your name">
+          </div>
+
+          <button @click="completeOnboarding()" :disabled="!tempName" :class="!tempName ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:shadow-[0_0_20px_-5px_rgba(var(--color-brand-500),0.4)]'" class="w-full bg-brand-600 text-white rounded-xl py-3.5 text-sm font-medium tracking-wide transition-all duration-300 flex items-center justify-center gap-2">
+            Begin Journey
+            <iconify-icon icon="solar:arrow-right-linear" width="18"></iconify-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- App Layout -->
+      <div x-show="view !== 'onboarding'" class="flex-1 flex flex-col min-h-screen overflow-x-hidden transition-opacity duration-500">
+        <!-- Prominent Logo Header -->
+        <div x-show="view !== 'home'" x-transition class="px-4 sm:px-6 pt-4 pb-2 flex items-center gap-3 shrink-0 border-b border-white/5 safe-area-inset-top">
+          <button @click="view = 'home'" class="w-12 h-12 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-200 flex-shrink-0 min-touch-target">
+            <iconify-icon icon="solar:arrow-left-linear" width="20"></iconify-icon>
+          </button>
+          <div class="cursor-pointer flex-1 min-w-0">
+            <h1 class="text-xl sm:text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-brand-300 to-indigo-300 truncate">Returned To Sender</h1>
+          </div>
+        </div>
+        
+        <!-- Header -->
+        <header class="pt-6 pb-2 px-4 sm:px-6 flex justify-between items-center z-20 shrink-0 safe-area-inset-top">
+          <div @click="view = 'home'" class="cursor-pointer flex-1 min-w-0">
+            <h2 x-show="view === 'home'" class="text-xs sm:text-sm font-medium text-slate-400">Returned To Sender</h2>
+            <h1 class="text-base sm:text-lg font-semibold text-white tracking-tight truncate" x-text="view !== 'home' ? getTitle() : ''"></h1>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <button x-show="view !== 'home'" @click="view = 'home'" class="w-12 h-12 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center text-slate-300 hover:text-white transition-colors min-touch-target">
+              <iconify-icon icon="solar:home-2-linear" width="20"></iconify-icon>
+            </button>
+            <button x-show="view === 'home'" @click="view = 'settings'" class="w-12 h-12 sm:w-10 sm:h-10 rounded-full glass flex items-center justify-center text-slate-300 hover:text-white transition-colors min-touch-target" title="Settings">
+              <iconify-icon icon="solar:settings-linear" width="20"></iconify-icon>
+            </button>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto overflow-x-hidden px-4 sm:px-6 py-4 pb-32 sm:pb-24 relative" :class="layoutMode === 'desktop' ? 'max-w-4xl mx-auto w-full' : ''">
+          <!-- HOME VIEW -->
+          <div x-show="view === 'home'" class="space-y-6 animate-fade-in pb-8">
+            <!-- Welcome Back Greeting -->
+            <div class="text-center py-4 sm:py-6">
+              <h1 :class="user.theme === 'White' ? 'text-brand-50' : (user.theme === 'Rose' ? 'text-brand-900' : 'text-white')" class="text-lg sm:text-xl md:text-3xl font-medium tracking-tight mb-2" x-text="`Welcome back, ${user.name}`"></h1>
+            </div>
+
+            <!-- Big Logo -->
+            <div class="text-center py-6 sm:py-8">
+              <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-brand-200 via-brand-300 to-indigo-300 mb-2">
+                Returned To Sender
+              </h1>
+              <p class="text-slate-400 text-sm italic">Write to your future self</p>
+            </div>
+
+            <!-- Quote -->
+            <div class="group relative">
+              <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-500 to-indigo-600 rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
+              <div class="relative glass rounded-xl p-6 flex flex-col items-center justify-center text-center space-y-3">
+                <iconify-icon icon="solar:quote-up-square-linear" class="text-brand-400" width="24"></iconify-icon>
+                  <button @click="refreshQuote()" class="p-2 rounded-lg hover:bg-white/10 text-brand-400 hover:text-brand-300 transition-colors" title="Get a new quote">
+                    <iconify-icon icon="solar:refresh-bold" width="18"></iconify-icon>
+                  </button>
+                <p class="text-base sm:text-lg md:text-xl font-medium text-white/90 leading-relaxed italic tracking-tight"><span>"</span><span x-text="dailyQuote.text"></span><span>"</span></p>
+
+              </div>
+            </div>
+
+            <!-- Ready Notes Notification -->
+            <div x-show="hasUnreadReadyNotes()" class="bg-gradient-to-r from-brand-500/20 to-brand-600/20 border border-brand-500/40 rounded-xl p-4 backdrop-blur-sm animate-slide-up">
+              <div class="flex items-center gap-3">
+                <div class="flex-shrink-0">
+                  <iconify-icon icon="solar:bell-bold" class="text-brand-400" width="24"></iconify-icon>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium text-white mb-1">
+                    <span x-text="readyToOpenCount + ' note' + (readyToOpenCount === 1 ? '' : 's')"></span> ready to open!
+                  </p>
+                  <p class="text-xs text-slate-400">Time-locked notes are now available</p>
+                </div>
+                <button @click="view = 'open'" class="flex-shrink-0 px-3 py-1.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-medium rounded-lg transition-colors">
+                  View
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Grid: Responsive Columns based on Layout Mode -->
+            <div class="grid gap-3 sm:gap-4" :class="layoutMode === 'desktop' ? 'grid-cols-4' : 'grid-cols-2'">
+              <!-- Write -->
+              <button @click="openWrite()" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
+                <div class="md:w-16 md:h-16 w-12 h-12 rounded-full bg-brand-500/20 text-brand-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <iconify-icon icon="solar:pen-new-square-linear" :width="layoutMode === 'desktop' ? 36 : 28"></iconify-icon>
+                </div>
+                <div class="text-left">
+                  <span class="block text-white font-medium md:text-base text-sm">
+                    Write Note
+                  </span>
+                  <span class="md:text-sm text-xs text-slate-500">
+                    For your future self
+                  </span>
+                </div>
+              </button>
+
+              <!-- Open -->
+              <button @click="view = 'open'" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform relative flex-shrink-0">
+                  <iconify-icon icon="solar:letter-linear" width="22" class="sm:w-6"></iconify-icon>
+                  <span x-show="hasUnreadReadyNotes()" class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-slate-900"></span>
+                </div>
+                <div class="text-left">
+                  <p class="text-xs sm:text-sm font-medium text-white">Open</p>
+                  <p class="text-[10px] sm:text-xs text-slate-400" x-text="hasUnreadReadyNotes() ? `${readyToOpenCount} ready now` : 'Read notes'"></p>
+                </div>
+              </button>
+
+              <!-- Mood -->
+              <button @click="startMoodCheckIn()" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-emerald-500/10 text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                  <iconify-icon icon="solar:smile-circle-linear" width="22" class="sm:w-6"></iconify-icon>
+                </div>
+                <div class="text-left">
+                  <p class="text-xs sm:text-sm font-medium text-white">Mood</p>
+                  <p class="text-[10px] sm:text-xs text-slate-400">Check in</p>
+                </div>
+              </button>
+
+              <!-- Reflections -->
+              <button @click="view = 'reflections'" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-rose-500/10 text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                  <iconify-icon icon="solar:calendar-mark-linear" width="22" class="sm:w-6"></iconify-icon>
+                </div>
+                <div class="text-left">
+                  <p class="text-xs sm:text-sm font-medium text-white">Reflect</p>
+                  <p class="text-[10px] sm:text-xs text-slate-400">Journal</p>
+                </div>
+              </button>
+
+              <!-- Settings -->
+              <button @click="view = 'settings'" class="col-span-2 glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex items-center gap-3 sm:gap-4 md:gap-5 transition-all duration-300 min-h-24 sm:min-h-28 touch-manipulation active:scale-95" :class="layoutMode === 'desktop' ? 'col-span-4' : 'col-span-2'">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-slate-700/30 text-slate-400 flex items-center justify-center flex-shrink-0">
+                  <iconify-icon icon="solar:settings-linear" width="22" class="sm:w-6"></iconify-icon>
+                </div>
+                <span class="text-slate-400 font-medium text-xs sm:text-sm md:text-base">
+                  Settings
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- WRITE VIEW -->
+          <div x-show="view === 'write'" class="space-y-5 animate-fade-in max-w-2xl mx-auto pb-8">
+            <!-- Category Selector -->
+            <div class="space-y-2">
+              <label class="text-xs text-slate-400 uppercase tracking-widest font-semibold ml-1">
+                Unlock Condition
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <template x-for="cat in ['Future Date', 'Mood-Based', 'Achievement / Event', 'Reflection']">
+                  <button @click="newNote.category = cat; checkAchievementPrompt(cat)" :class="newNote.category === cat ? 'bg-brand-600 border-brand-500 text-white shadow-lg shadow-brand-500/20' : 'glass text-slate-400 hover:bg-white/5'" class="py-3 px-2 rounded-xl text-[11px] font-semibold border border-transparent transition-all truncate leading-tight min-h-12 touch-manipulation active:scale-95" x-text="cat"></button>
+                </template>
+              </div>
+            </div>
+
+            <!-- Achievement Prompts Suggestion Strip -->
+            <div x-show="newNote.category === 'Achievement / Event'" x-collapse="" class="animate-slide-up">
+              <label class="text-xs text-brand-300 ml-1 mb-2 block font-medium">
+                Try a prompt:
+              </label>
+              <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                <template x-for="prompt in achievementPrompts">
+                  <button @click="applyPrompt(prompt)" class="whitespace-nowrap px-3 py-1.5 rounded-lg bg-brand-900/30 border border-brand-500/20 text-[10px] text-brand-200 hover:bg-brand-500/20 hover:border-brand-400/50 transition-colors flex-shrink-0">
+                    <span x-text="prompt.label"></span>
+                  </button>
+                </template>
+              </div>
+            </div>
+
+            <!-- Dynamic Condition Input -->
+            <div x-show="newNote.category === 'Future Date'" class="animate-slide-up">
+              <label class="text-xs text-slate-400 ml-1 mb-1 block">
+                Unlocks on
+              </label>
+              <input type="datetime-local" x-model="newNote.unlockDate" class="w-full glass rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/50 transition-all font-mono">
+            </div>
+
+            <div x-show="newNote.category === 'Mood-Based'" class="animate-slide-up bg-brand-900/20 rounded-xl p-4 border border-brand-500/20 hover:border-brand-500/40 transition-colors">
+              <div class="flex items-center justify-between cursor-pointer" @click="openMoodSelectorForWrite()">
+                <span class="text-sm text-brand-200">
+                  Unlock when I feel:
+                  <strong x-text="newNote.unlockMood || 'Select Mood'" class="text-white ml-1 font-semibold"></strong>
+                </span>
+                <iconify-icon icon="solar:alt-arrow-right-linear" class="text-brand-400"></iconify-icon>
+              </div>
+            </div>
+
+            <!-- Note Content -->
+            <div class="space-y-3 pt-2">
+              <input type="text" x-model="newNote.title" placeholder="Title your note..." class="w-full bg-transparent text-base sm:text-lg font-medium text-white placeholder-slate-600 focus:outline-none">
+              <textarea x-model="newNote.body" placeholder="Write to your future self..." class="w-full bg-transparent text-sm leading-relaxed text-slate-300 placeholder-slate-700 min-h-64 focus:outline-none resize-none p-1"></textarea>
+            </div>
+
+            <div class="fixed bottom-6 left-0 right-0 px-4 sm:px-6 z-40 safe-area-inset-bottom">
+              <button @click="saveNote()" class="w-full bg-brand-600 text-white rounded-xl py-4 sm:py-3 shadow-lg shadow-brand-900/50 font-medium text-sm sm:text-base flex items-center justify-center gap-2 hover:bg-brand-500 transition-colors touch-manipulation active:scale-95">
+                <iconify-icon icon="solar:lock-keyhole-linear" width="18"></iconify-icon>
+                Seal &amp; Lock Note
+              </button>
+            </div>
+          </div>
+
+          <!-- MOOD WHEEL VIEW (FIXED) -->
+          <div x-show="view === 'mood_wheel'" class="flex flex-col items-center justify-center animate-fade-in relative pb-8 w-full">
+            <!-- Mood History Section -->
+            <div class="w-full max-w-lg px-4 sm:px-6 pt-4 pb-6" x-show="moodLog.length > 0">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Mood History</h3>
+              <div class="space-y-2 max-h-[200px] overflow-y-auto">
+                <template x-for="log in moodLog" :key="log.timestamp">
+                  <div class="glass p-3 rounded-lg">
+                    <div class="flex justify-between items-start gap-2">
+                      <div class="flex flex-wrap gap-1">
+                        <template x-for="m in log.moods">
+                          <span class="text-[9px] bg-brand-500/20 px-2 py-0.5 rounded text-brand-300 font-medium border border-brand-500/30" x-text="m"></span>
+                        </template>
+                      </div>
+                    </div>
+                    <span class="text-[10px] text-slate-500 block mt-2" x-text="formatDateTime(log.timestamp)"></span>
+                  </div>
+                </template>
+              </div>
+              <div class="h-px bg-white/5 my-6"></div>
+            </div>
+
+            <div class="flex flex-col items-center justify-center relative w-full">
+              <!-- Centered Wheel Wrapper -->
+              <div class="relative w-64 h-64 sm:w-72 sm:h-72 md:w-96 md:h-96 flex items-center justify-center shrink-0">
+                <!-- Decorative Glow -->
+                <div class="absolute inset-0 bg-brand-500/5 rounded-full blur-3xl pointer-events-none transition-all duration-700"></div>
+
+                <!-- Center Interaction Hub -->
+                <button @click="(selectedTertiaryMoods.length > 0 || customEmotions.length > 0) ? finalizeMood() : (selectedSecondaryMood ? selectSecondaryMood(null) : (selectedCoreMood ? selectCoreMood(null) : null))" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-32 h-32 rounded-full glass flex flex-col items-center justify-center transition-all duration-500 ease-out group" :class="(selectedTertiaryMoods.length > 0 || customEmotions.length > 0) ? 'bg-brand-500 text-white shadow-[0_0_40px_rgba(var(--color-brand-500),0.4)] border-brand-400 scale-105' : (selectedCoreMood ? 'bg-slate-900/50 border-white/20' : 'bg-slate-900/30 border-white/10')" :disabled="!selectedCoreMood">
+                  <!-- State 1: Idle -->
+                  <template x-if="!selectedCoreMood">
+                    <div class="flex flex-col items-center space-y-2 animate-fade-in">
+                      <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+                        How are you?
+                      </span>
+                      <iconify-icon icon="solar:smile-circle-linear" width="24" class="text-slate-500"></iconify-icon>
+                    </div>
+                  </template>
+
+                  <!-- State 2: Core Selected (Show Core Name, Click to Reset) -->
+                  <template x-if="selectedCoreMood &amp;&amp; !selectedSecondaryMood">
+                    <div class="flex flex-col items-center animate-fade-in">
+                      <span class="text-[10px] text-slate-500 mb-1 uppercase tracking-wider">
+                        Core Emotion
+                      </span>
+                      <span x-text="selectedCoreMood" class="text-lg font-bold text-white tracking-tight"></span>
+                      <span class="text-[10px] text-brand-400 mt-2 flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                        <iconify-icon icon="solar:restart-linear" width="10"></iconify-icon>
+                        Reset
+                      </span>
+                    </div>
+                  </template>
+
+                  <!-- State 3: Secondary Selected (Show Secondary Name, Click to Back) -->
+                  <template x-if="selectedSecondaryMood &amp;&amp; selectedTertiaryMoods.length === 0">
+                    <div class="flex flex-col items-center animate-fade-in">
+                      <span class="text-[10px] text-slate-500 mb-1 uppercase tracking-wider">
+                        Feeling
+                      </span>
+                      <span x-text="selectedSecondaryMood" class="text-base font-bold text-white tracking-tight"></span>
+                      <span class="text-[10px] text-slate-400 mt-2 flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+                        <iconify-icon icon="solar:arrow-left-linear" width="10"></iconify-icon>
+                        Back
+                      </span>
+                    </div>
+                  </template>
+
+                  <!-- State 4: Tertiary Selected (Confirm) -->
+                  <template x-if="selectedTertiaryMoods.length > 0 || customEmotions.length > 0">
+                    <div class="flex flex-col items-center animate-fade-in">
+                      <iconify-icon icon="solar:check-circle-bold" width="28" class="mb-1 text-white animate-pulse-slow"></iconify-icon>
+                      <span x-text="(selectedTertiaryMoods.length + customEmotions.length) + ' Selected'" class="text-sm font-bold text-white tracking-wide leading-tight text-center px-2"></span>
+                      <span class="text-[9px] text-white/80 mt-1 uppercase tracking-widest font-medium">
+                        Tap to Confirm
+                      </span>
+                    </div>
+                  </template>
+                </button>
+
+                <!-- Level 1: Core Emotions Ring -->
+                <template x-for="(mood, index) in moodsList" :key="mood">
+                  <button @click="selectCoreMood(mood)" x-show="!selectedCoreMood" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-50" x-transition:enter-end="opacity-100 scale-100" class="absolute top-1/2 left-1/2 -ml-8 -mt-8 w-16 h-16 rounded-full flex items-center justify-center text-[10px] font-bold tracking-wide hover:scale-110 transition-all duration-300 z-20" :class="mood === 'Happy' ? 'bg-gradient-to-br from-yellow-500/40 to-orange-500/40 border border-yellow-400/50 text-yellow-200 hover:from-yellow-500/60 hover:to-orange-500/60 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)]' : mood === 'Sad' ? 'bg-gradient-to-br from-blue-500/40 to-indigo-500/40 border border-blue-400/50 text-blue-200 hover:from-blue-500/60 hover:to-indigo-500/60 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]' : mood === 'Angry' ? 'bg-gradient-to-br from-red-500/40 to-rose-500/40 border border-red-400/50 text-red-200 hover:from-red-500/60 hover:to-rose-500/60 hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]' : mood === 'Fearful' ? 'bg-gradient-to-br from-purple-500/40 to-pink-500/40 border border-purple-400/50 text-purple-200 hover:from-purple-500/60 hover:to-pink-500/60 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]' : mood === 'Calm' ? 'bg-gradient-to-br from-cyan-500/40 to-teal-500/40 border border-cyan-400/50 text-cyan-200 hover:from-cyan-500/60 hover:to-teal-500/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]' : 'bg-gradient-to-br from-emerald-500/40 to-green-500/40 border border-emerald-400/50 text-emerald-200 hover:from-emerald-500/60 hover:to-green-500/60 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]'" :style="`transform: rotate(${index * (360 / moodsList.length)}deg) translate(135px) rotate(-${index * (360 / moodsList.length)}deg)`">
+                    <span x-text="mood"></span>
+                  </button>
+                </template>
+
+                <!-- Level 2: Secondary Emotions Ring -->
+                <template x-if="selectedCoreMood">
+                  <template x-for="(sub, index) in Object.keys(moodTree[selectedCoreMood] || {})" :key="sub">
+                    <button @click="selectSecondaryMood(sub)" x-show="!selectedSecondaryMood" x-transition:enter="transition ease-out duration-300 delay-100" x-transition:enter-start="opacity-0 scale-75" x-transition:enter-end="opacity-100 scale-100" class="absolute top-1/2 left-1/2 -ml-9 -mt-9 w-18 h-18 rounded-full flex flex-col items-center justify-center p-2 text-center transition-all duration-300 z-20 hover:scale-105" :class="selectedCoreMood === 'Happy' ? 'bg-gradient-to-br from-yellow-500/30 to-orange-500/30 border border-yellow-400/40 text-yellow-100 hover:from-yellow-500/50 hover:to-orange-500/50 hover:border-yellow-400/60' : selectedCoreMood === 'Sad' ? 'bg-gradient-to-br from-blue-500/30 to-indigo-500/30 border border-blue-400/40 text-blue-100 hover:from-blue-500/50 hover:to-indigo-500/50 hover:border-blue-400/60' : selectedCoreMood === 'Angry' ? 'bg-gradient-to-br from-red-500/30 to-rose-500/30 border border-red-400/40 text-red-100 hover:from-red-500/50 hover:to-rose-500/50 hover:border-red-400/60' : selectedCoreMood === 'Fearful' ? 'bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-400/40 text-purple-100 hover:from-purple-500/50 hover:to-pink-500/50 hover:border-purple-400/60' : selectedCoreMood === 'Calm' ? 'bg-gradient-to-br from-cyan-500/30 to-teal-500/30 border border-cyan-400/40 text-cyan-100 hover:from-cyan-500/50 hover:to-teal-500/50 hover:border-cyan-400/60' : 'bg-gradient-to-br from-emerald-500/30 to-green-500/30 border border-emerald-400/40 text-emerald-100 hover:from-emerald-500/50 hover:to-green-500/50 hover:border-emerald-400/60'" :style="`transform: rotate(${index * (360 / Object.keys(moodTree[selectedCoreMood]).length)}deg) translate(135px) rotate(-${index * (360 / Object.keys(moodTree[selectedCoreMood]).length)}deg)`">
+                      <span x-text="sub" class="text-[10px] font-medium leading-tight"></span>
+                    </button>
+                  </template>
+                </template>
+
+                <!-- Level 3: Tertiary Emotions Ring (Multi-select) -->
+                <template x-if="selectedSecondaryMood">
+                  <template x-for="(tert, index) in moodTree[selectedCoreMood][selectedSecondaryMood]" :key="tert">
+                    <button @click="toggleTertiaryMood(tert)" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-75" x-transition:enter-end="opacity-100 scale-100" class="absolute top-1/2 left-1/2 -ml-10 -mt-10 w-20 h-20 rounded-full flex flex-col items-center justify-center p-2 text-center transition-all duration-300 z-20" :class="selectedTertiaryMoods.includes(tert) ? (selectedCoreMood === 'Happy' ? 'bg-gradient-to-br from-yellow-500 to-orange-500 text-white border border-yellow-300 scale-110 shadow-lg shadow-yellow-500/50 z-30' : selectedCoreMood === 'Sad' ? 'bg-gradient-to-br from-blue-500 to-indigo-500 text-white border border-blue-300 scale-110 shadow-lg shadow-blue-500/50 z-30' : selectedCoreMood === 'Angry' ? 'bg-gradient-to-br from-red-500 to-rose-500 text-white border border-red-300 scale-110 shadow-lg shadow-red-500/50 z-30' : selectedCoreMood === 'Fearful' ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white border border-purple-300 scale-110 shadow-lg shadow-purple-500/50 z-30' : selectedCoreMood === 'Calm' ? 'bg-gradient-to-br from-cyan-500 to-teal-500 text-white border border-cyan-300 scale-110 shadow-lg shadow-cyan-500/50 z-30' : 'bg-gradient-to-br from-emerald-500 to-green-500 text-white border border-emerald-300 scale-110 shadow-lg shadow-emerald-500/50 z-30') : (selectedCoreMood === 'Happy' ? 'bg-yellow-500/20 border border-yellow-400/40 text-yellow-100 hover:bg-yellow-500/30 hover:border-yellow-400/60 hover:scale-105' : selectedCoreMood === 'Sad' ? 'bg-blue-500/20 border border-blue-400/40 text-blue-100 hover:bg-blue-500/30 hover:border-blue-400/60 hover:scale-105' : selectedCoreMood === 'Angry' ? 'bg-red-500/20 border border-red-400/40 text-red-100 hover:bg-red-500/30 hover:border-red-400/60 hover:scale-105' : selectedCoreMood === 'Fearful' ? 'bg-purple-500/20 border border-purple-400/40 text-purple-100 hover:bg-purple-500/30 hover:border-purple-400/60 hover:scale-105' : selectedCoreMood === 'Calm' ? 'bg-cyan-500/20 border border-cyan-400/40 text-cyan-100 hover:bg-cyan-500/30 hover:border-cyan-400/60 hover:scale-105' : 'bg-emerald-500/20 border border-emerald-400/40 text-emerald-100 hover:bg-emerald-500/30 hover:border-emerald-400/60 hover:scale-105')" :style="`transform: rotate(${index * (360 / moodTree[selectedCoreMood][selectedSecondaryMood].length)}deg) translate(135px) rotate(-${index * (360 / moodTree[selectedCoreMood][selectedSecondaryMood].length)}deg)`">
+                      <span x-text="tert" class="text-[10px] font-medium leading-tight"></span>
+                    </button>
+                  </template>
+                </template>
+              </div>
+            </div>
+
+            <!-- Custom Emotions Section -->
+            <div x-show="selectedTertiaryMoods.length > 0" class="w-full max-w-lg px-6 mt-8 animate-slide-up">
+              <label class="text-xs text-slate-400 mb-3 block font-medium">Add custom emotions (optional)</label>
+              <div class="flex gap-2 mb-3">
+                <input 
+                  type="text" 
+                  x-model="customEmotionInput" 
+                  @keydown.enter="addCustomEmotion()" 
+                  placeholder="Type an emotion and press Enter..."
+                  class="flex-1 glass rounded-lg px-3 py-2 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-500/50 transition-all"
+                >
+                <button 
+                  @click="addCustomEmotion()" 
+                  :disabled="!customEmotionInput.trim()"
+                  class="px-4 py-2 rounded-lg bg-brand-600/50 hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+              <div x-show="customEmotions.length > 0" class="flex flex-wrap gap-2">
+                <template x-for="emotion in customEmotions" :key="emotion">
+                  <div class="flex items-center gap-2 bg-brand-500/20 border border-brand-500/50 rounded-lg px-3 py-1 text-xs text-brand-200">
+                    <span x-text="emotion"></span>
+                    <button @click="removeCustomEmotion(emotion)" class="hover:text-brand-100 transition-colors">
+                      <iconify-icon icon="solar:close-circle-linear" width="14"></iconify-icon>
+                    </button>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+
+          <!-- MOOD RESULT / LETTER -->
+          <div x-show="view === 'mood_result'" class="animate-fade-in space-y-6 max-w-lg mx-auto">
+            <div class="text-center py-4">
+              <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-500/10 text-brand-400 mb-4 border border-brand-500/20">
+                <iconify-icon icon="solar:heart-angle-linear" width="32"></iconify-icon>
+              </div>
+              <h2 class="text-xl font-medium text-white mb-1">
+                You are feeling
+                <span x-text="currentMood" class="text-brand-300"></span>
+                .
+              </h2>
+              <p class="text-slate-400 text-xs">
+                Here is a letter from the community.
+              </p>
+            </div>
+
+            <div class="glass p-6 rounded-2xl border-l-2 border-brand-500/50 relative overflow-hidden">
+              <div class="absolute top-0 right-0 p-4 opacity-10 text-brand-200">
+                <iconify-icon icon="solar:quote-up-linear" width="60"></iconify-icon>
+              </div>
+              <p class="text-sm leading-7 text-slate-200 font-light" x-text="getCommunityLetter()"></p>
+            </div>
+
+            <div x-show="unlockedNotes.length &gt; 0" class="pt-4">
+              <p class="text-xs text-center text-slate-500 mb-3">
+                This feeling unlocked a note:
+              </p>
+              <div class="glass p-4 rounded-xl border border-brand-500/30 shadow-[0_0_15px_-5px_rgba(var(--color-brand-500),0.2)]">
+                <div class="flex justify-between items-start mb-1">
+                  <span class="text-brand-300 text-[10px] font-bold tracking-wider uppercase">
+                    Unlocked Just Now
+                  </span>
+                </div>
+                <h3 class="text-white font-medium text-sm">
+                  A note for when you feel
+                  <span x-text="currentMood"></span>
+                </h3>
+                <button @click="view = 'open'" class="mt-3 text-xs text-white bg-brand-600 px-3 py-1.5 rounded-lg w-full">
+                  View in Notes
+                </button>
+              </div>
+            </div>
+            <div class="pt-8 mt-6 border-t border-white/5 space-y-4">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest text-center">
+                Your Mood History
+              </h3>
+              <div class="space-y-3 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-800 before:to-transparent">
+                <template x-for="log in moodLog.slice(0, 5)">
+                  <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-5 h-5 rounded-full border border-slate-700 bg-slate-900 group-hover:border-brand-500 transition-colors shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow shadow-slate-900 z-10">
+                      <div class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:bg-brand-400"></div>
+                    </div>
+                    <div class="ml-6 glass p-3 rounded-lg flex-1 md:w-[calc(50%-1.5rem)] md:mx-0">
+                      <div class="flex justify-between items-start mb-1">
+                        <div class="flex flex-wrap gap-1">
+                          <template x-for="m in log.moods">
+                            <span class="text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300" x-text="m"></span>
+                          </template>
+                        </div>
+                        <span class="text-[9px] text-slate-500 whitespace-nowrap" x-text="formatDateTime(log.timestamp)"></span>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+                <div x-show="moodLog.length === 0" class="text-center text-xs text-slate-600 italic py-4 pl-4">
+                  No history yet.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPEN / NOTES LIST VIEW -->
+          <div x-show="view === 'open'" class="space-y-4 animate-fade-in pb-8">
+            <!-- Tabs -->
+            <div class="flex gap-1 p-1 bg-white/5 rounded-xl mb-6 overflow-x-auto">
+              <button @click="notesTab = 'unlocked'" :class="notesTab === 'unlocked' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'" class="py-2 px-3 text-xs font-medium rounded-lg transition-all whitespace-nowrap min-h-10 touch-manipulation active:scale-95">
+                Unlocked
+              </button>
+              <button @click="notesTab = 'locked'" :class="notesTab === 'locked' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'" class="py-2 px-3 text-xs font-medium rounded-lg transition-all whitespace-nowrap min-h-10 touch-manipulation active:scale-95">
+                Locked
+              </button>
+              <button @click="notesTab = 'favorites'" :class="notesTab === 'favorites' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'" class="py-2 px-3 text-xs font-medium rounded-lg transition-all whitespace-nowrap min-h-10 touch-manipulation active:scale-95">
+                Favorites
+              </button>
+              <button @click="notesTab = 'deleted'" :class="notesTab === 'deleted' ? 'bg-white/10 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'" class="py-2 px-3 text-xs font-medium rounded-lg transition-all whitespace-nowrap min-h-10 touch-manipulation active:scale-95">
+                Deleted
+              </button>
+            </div>
+
+            <!-- List -->
+            <div class="grid gap-3 pb-8" :class="layoutMode === 'desktop' ? 'grid-cols-2' : 'grid-cols-1'">
+              <template x-for="note in getFilteredNotes()" :key="note.id">
+                <div class="relative glass rounded-xl overflow-hidden group transition-all duration-300 hover:bg-white/10">
+                  <!-- Action Menu Button -->
+                  <div x-show="notesTab !== 'deleted'" class="absolute bottom-2 right-2 z-20 flex gap-2">
+                    <button @click.stop="note.isPinned = !note.isPinned; notes = [...notes]; localStorage.setItem('unread_notes', JSON.stringify(notes))" class="p-2.5 rounded-lg transition-colors shadow-lg" :class="note.isPinned ? 'bg-yellow-500/40 hover:bg-yellow-500/50 text-yellow-200 hover:text-yellow-100 shadow-yellow-500/20' : 'bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 hover:text-slate-200 shadow-slate-500/20'">
+                      <iconify-icon icon="solar:star-bold" width="18"></iconify-icon>
+                    </button>
+                    <button @click.stop="deleteNote(note)" class="px-3 py-2.5 rounded-lg bg-red-500/40 hover:bg-red-500/60 text-white transition-colors shadow-lg shadow-red-500/20 flex items-center justify-center text-xs font-medium whitespace-nowrap gap-1.5">
+                      <iconify-icon icon="solar:trash-bin-linear" width="16"></iconify-icon>
+                      Delete
+                    </button>
+                  </div>
+
+                  <!-- For Deleted Notes: Restore/Delete permanently -->
+                  <div x-show="notesTab === 'deleted'" class="absolute bottom-2 right-2 z-20 flex gap-2">
+                    <button @click.stop="restoreNote(note)" class="px-3 py-2.5 rounded-lg bg-brand-500/30 hover:bg-brand-500/50 text-brand-300 hover:text-brand-200 transition-colors shadow-lg shadow-brand-500/20 text-xs font-medium whitespace-nowrap" title="Restore">
+                      Restore
+                    </button>
+                    <button @click.stop="deleteNote(note)" class="px-3 py-2.5 rounded-lg bg-red-500/40 hover:bg-red-500/60 text-white transition-colors shadow-lg shadow-red-500/20 flex items-center justify-center text-xs font-medium whitespace-nowrap gap-1.5">
+                      <iconify-icon icon="solar:trash-bin-linear" width="16"></iconify-icon>
+                      Delete
+                    </button>
+                  </div>
+                  
+                  <!-- Unread Badge -->
+                  <div x-show="!note.isRead && !note.isLocked" class="absolute top-2 left-2 z-10 w-2.5 h-2.5 rounded-full bg-brand-500 shadow-lg shadow-brand-500/50 animate-pulse"></div>
+                  
+                  <!-- Unlocked State -->
+                  <div x-show="!note.isLocked && notesTab !== 'deleted'" class="p-4 cursor-pointer" @click="readNote(note)">
+                    <h3 class="text-white font-medium text-sm truncate mb-2" x-text="note.title"></h3>
+                    <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3" x-text="note.body"></p>
+                    <div class="flex gap-2 mb-3">
+                      <span class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-300 text-[10px] border border-brand-500/10" x-text="note.category"></span>
+                      <span x-show="note.isPinned" class="px-2 py-0.5 rounded bg-yellow-500/10 text-yellow-300 text-[10px] border border-yellow-500/10 flex items-center gap-1">
+                        <iconify-icon icon="solar:star-bold" width="10"></iconify-icon>
+                        Favorite
+                      </span>
+                    </div>
+                    <span class="text-[10px] text-slate-500" x-text="formatDate(note.dateCreated)"></span>
+                  </div>
+
+                  <!-- Locked State -->
+                  <div x-show="note.isLocked && notesTab !== 'deleted'" class="p-4 relative" :class="note.category === 'Future Date' && getCountdownForNote(note) ? 'cursor-not-allowed opacity-75' : 'cursor-pointer'" @click="openNoteWithConfirmation(note)">
+                    <!-- Title (Always visible) -->
+                    <h3 class="text-white font-medium text-sm truncate mb-3" x-text="note.title"></h3>
+                    
+                    <!-- Countdown Timer for Time-Based Locks -->
+                    <div x-show="note.category === 'Future Date'" class="mb-3 p-2 rounded-lg" :class="getCountdownForNote(note) ? 'bg-slate-700/30 border border-slate-600/50' : 'bg-brand-500/20 border border-brand-500/50'">
+                      <span class="text-xs font-semibold" :class="getCountdownForNote(note) ? 'text-slate-400' : 'text-brand-300'" x-text="getCountdownForNote(note) ? 'Opens in: ' + getCountdownForNote(note) : 'Ready to open!'"></span>
+                    </div>
+                    
+                    <!-- Blurred Content -->
+                    <div class="backdrop-blur-sm bg-slate-900/40 rounded-lg p-3 mb-3">
+                      <div class="opacity-30 blur-sm pointer-events-none select-none space-y-2">
+                        <div class="h-3 w-5/6 bg-slate-600 rounded"></div>
+                        <div class="h-3 w-4/5 bg-slate-700 rounded"></div>
+                      </div>
+                    </div>
+                    
+                    <!-- Lock Info -->
+                    <div class="flex items-center gap-2 text-[10px] text-slate-400 mb-2">
+                      <iconify-icon icon="solar:lock-keyhole-linear" width="14"></iconify-icon>
+                      <span x-show="note.category === 'Future Date'" x-text="'Time-locked'"></span>
+                      <span x-show="note.category === 'Mood-Based'" x-text="'Conditional: ' + note.unlockMood"></span>
+                      <span x-show="note.category === 'Achievement / Event'" x-text="'Achievement-locked'"></span>
+                    </div>
+                    <span class="text-[10px] text-slate-500" x-text="formatDate(note.dateCreated)"></span>
+                  </div>
+
+                  <!-- Recently Deleted State (Unread) - with blurred content -->
+                  <div x-show="notesTab === 'deleted' && !note.isRead" class="p-4">
+                    <h3 class="text-white font-medium text-sm truncate mb-3" x-text="note.title"></h3>
+                    <div class="backdrop-blur-sm bg-slate-900/40 rounded-lg p-3 mb-3">
+                      <div class="opacity-30 blur-sm pointer-events-none select-none space-y-2">
+                        <div class="h-3 w-5/6 bg-slate-600 rounded"></div>
+                        <div class="h-3 w-4/5 bg-slate-700 rounded"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <span class="px-2 py-0.5 rounded bg-red-500/10 text-red-300 text-[10px] border border-red-500/10" x-text="note.category"></span>
+                    </div>
+                    <span class="text-[10px] text-slate-500" x-text="formatDate(note.deletedAt)"></span>
+                  </div>
+
+                  <!-- Recently Deleted State (Read) - show content -->
+                  <div x-show="notesTab === 'deleted' && note.isRead" class="p-4">
+                    <h3 class="text-white font-medium text-sm truncate mb-2" x-text="note.title"></h3>
+                    <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed mb-3" x-text="note.body"></p>
+                    <div class="mb-3">
+                      <span class="px-2 py-0.5 rounded bg-red-500/10 text-red-300 text-[10px] border border-red-500/10" x-text="note.category"></span>
+                    </div>
+                    <span class="text-[10px] text-slate-500" x-text="formatDate(note.deletedAt)"></span>
+                  </div>
+                </div>
+              </template>
+
+              <div x-show="getFilteredNotes().length === 0" class="col-span-full text-center py-10">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/5 text-slate-600 mb-3">
+                  <iconify-icon icon="solar:notes-linear" width="24"></iconify-icon>
+                </div>
+                <p class="text-sm text-slate-500">No notes found here.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- REFLECTIONS VIEW -->
+          <div x-show="view === 'reflections'" class="space-y-6 animate-fade-in max-w-2xl mx-auto pb-8">
+            <div class="glass p-5 rounded-xl border border-rose-500/20">
+              <h3 class="text-sm font-medium text-white mb-1">Weekly Prompt</h3>
+              <p class="text-xs text-rose-200/80 italic mb-4" x-text="currentPrompt"></p>
+              <textarea x-model="reflectionEntry" placeholder="Reflect here..." class="w-full bg-black/20 rounded-lg p-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-rose-500/50 min-h-32 resize-none mb-2 font-size-16"></textarea>
+              <button @click="saveReflection()" class="text-xs sm:text-sm bg-rose-600/80 hover:bg-rose-600 text-white px-4 py-3 rounded-lg w-full transition-colors font-medium min-h-12 touch-manipulation active:scale-95">
+                Save Reflection
+              </button>
+            </div>
+
+            <div class="space-y-4">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                History
+              </h4>
+              <template x-for="ref in reflections">
+                <div class="pl-4 border-l border-white/10 relative">
+                  <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-slate-800 border border-slate-600"></div>
+                  <span class="text-[10px] text-slate-500 block mb-1" x-text="formatDate(ref.date)"></span>
+                  <p class="text-xs text-slate-300 leading-relaxed" x-text="ref.text"></p>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- SETTINGS VIEW -->
+          <div x-show="view === 'settings'" class="space-y-8 animate-fade-in" :class="layoutMode === 'desktop' ? 'max-w-2xl mx-auto' : 'max-w-lg mx-auto'">
+            <!-- Profile -->
+            <div class="space-y-3">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Profile
+              </h3>
+              <div>
+                <label class="text-xs text-slate-400 block mb-1">
+                  Display Name
+                </label>
+                <input type="text" x-model="user.name" @input="saveUser()" class="w-full glass rounded-lg px-3 py-3 text-sm text-white focus:outline-none border-transparent focus:border-brand-500 transition-colors min-h-12">
+              </div>
+            </div>
+
+            <!-- Theme -->
+            <div class="space-y-3">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Theme Accent
+              </h3>
+              <div :class="layoutMode === 'desktop' ? 'grid grid-cols-5 gap-2' : 'grid grid-cols-3 gap-2'">
+                <template x-for="themeName in ['Purple', 'Indigo', 'Lilac', 'Midnight', 'Rose', 'Sky', 'Emerald', 'Amber', 'Black', 'White']">
+                  <button @click="setTheme(themeName)" class="h-9 rounded-lg text-[11px] font-medium transition-all border" :class="user.theme === themeName ? 'bg-white text-black border-white scale-105 shadow-md' : 'glass border-transparent text-slate-400 hover:bg-white/10'" x-text="themeName"></button>
+                </template>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="space-y-4">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Notifications
+              </h3>
+              
+              <!-- Sign In Section -->
+              <div x-show="!user.isSignedIn" class="space-y-3">
+                <p class="text-xs text-slate-400 mb-3">Sign in to receive unlock reminders and notifications</p>
+                <button @click="user.isSignedIn = true; user.email = 'google@example.com'; user.notifications = true; saveUser()" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg glass hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all text-sm font-medium group min-h-12 touch-manipulation active:scale-95">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  Continue with Google
+                </button>
+                <div class="relative flex items-center gap-3">
+                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                  <span class="text-xs text-slate-500">or</span>
+                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                </div>
+                <input type="email" x-model="tempEmail" placeholder="Enter your email" class="w-full glass rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none border border-white/5 focus:border-brand-500/50 transition-all min-h-12">
+                <button @click="user.isSignedIn = true; user.email = tempEmail; user.notifications = true; saveUser(); tempEmail = ''" :disabled="!tempEmail || !tempEmail.includes('@')" class="w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-12 touch-manipulation active:scale-95">
+                  Sign In with Email
+                </button>
+              </div>
+
+              <!-- Notifications Toggle (after sign in) -->
+              <div x-show="user.isSignedIn" class="space-y-3">
+                <div class="flex items-center justify-between p-3 rounded-lg bg-brand-500/10 border border-brand-500/20">
+                  <div class="flex items-center gap-2">
+                    <iconify-icon icon="solar:check-circle-bold" class="text-brand-400" width="18"></iconify-icon>
+                    <span class="text-sm text-brand-300 font-medium">Signed in as</span>
+                  </div>
+                  <span class="text-xs text-slate-400" x-text="user.email"></span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-slate-300">Unlock Reminders</span>
+                  <label class="switch">
+                    <input type="checkbox" x-model="user.notifications" @change="saveUser()">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <button @click="user.isSignedIn = false; user.email = ''; user.notifications = false; saveUser()" class="w-full text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-3 rounded-lg transition-colors border border-red-500/20 min-h-12 touch-manipulation active:scale-95">
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <!-- Note Read Modal Overlay -->
+      <div x-show="readingNote" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl p-4 sm:p-6 flex flex-col items-center justify-center overflow-y-auto" x-transition.opacity="">
+        <div class="w-full max-w-2xl max-h-screen flex flex-col">
+          <div class="flex justify-between items-center mb-6 flex-shrink-0">
+            <button @click="readingNote = null" class="text-slate-400 hover:text-white flex items-center gap-1 text-sm min-h-12 min-w-12 touch-manipulation active:scale-95">
+              <iconify-icon icon="solar:arrow-left-linear"></iconify-icon>
+              Back
+            </button>
+            <div class="relative" x-data="{ menuOpen: false }">
+              <button @click="menuOpen = !menuOpen" class="text-slate-500 hover:text-white p-2 rounded-lg hover:bg-white/5">
+                <iconify-icon icon="solar:menu-dots-linear"></iconify-icon>
+              </button>
+              <div x-show="menuOpen" @click.outside="menuOpen = false" class="absolute right-0 mt-2 w-48 glass rounded-xl border border-white/10 shadow-xl z-50 overflow-hidden">
+                <button @click="readingNote.isPinned = !readingNote.isPinned; notes = [...notes]; localStorage.setItem('unread_notes', JSON.stringify(notes)); menuOpen = false" :class="readingNote.isPinned ? (user.theme === 'White' ? 'text-brand-700 hover:bg-yellow-500/10 hover:text-brand-800' : (user.theme === 'Rose' ? 'text-brand-700 hover:bg-yellow-500/10 hover:text-brand-800' : 'text-yellow-300 hover:bg-yellow-500/10 hover:text-yellow-200')) : (user.theme === 'White' || user.theme === 'Rose' ? 'text-brand-700 hover:bg-white/10 hover:text-brand-800' : 'text-slate-300 hover:bg-white/10 hover:text-white')" class="w-full text-left px-4 py-3 text-sm flex items-center gap-2 border-b border-white/5">
+                  <iconify-icon :icon="readingNote.isPinned ? 'solar:star-bold' : 'solar:star-linear'"></iconify-icon>
+                  <span x-text="readingNote.isPinned ? 'Remove from Favorites' : 'Add to Favorites'"></span>
+                </button>
+                <button @click="url = 'data:text/plain;charset=utf-8,' + encodeURIComponent(readingNote.body); link = document.createElement('a'); link.href = url; link.download = readingNote.title + '.txt'; link.click(); menuOpen = false" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white flex items-center gap-2 border-b border-white/5">
+                  <iconify-icon icon="solar:download-linear"></iconify-icon>
+                  <span>Export Note</span>
+                </button>
+                <button @click="deleteNote(readingNote); menuOpen = false" class="w-full text-left px-4 py-3 text-sm text-red-300 hover:bg-red-500/10 hover:text-red-200 flex items-center gap-2">
+                  <iconify-icon icon="solar:trash-bin-linear"></iconify-icon>
+                  <span>Delete Note</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 overflow-y-auto" x-data="{ note: readingNote }">
+            <span class="text-brand-400 text-xs font-bold tracking-widest uppercase mb-2 block" x-text="readingNote?.category"></span>
+            <h1 class="text-2xl font-semibold text-white mb-6 leading-tight" x-text="readingNote?.title"></h1>
+            <div class="prose prose-invert prose-sm max-w-none">
+              <p class="text-slate-300 leading-7 whitespace-pre-line" x-text="readingNote?.body"></p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-white/5 text-xs text-slate-600">
+              Wrote on
+              <span x-text="readingNote ? formatDate(readingNote.dateCreated) : ''"></span>
+              <template x-if="readingNote && readingNote.category === 'Future Date' && readingNote.unlockDate">
+                <div class="mt-2">
+                  <span class="font-semibold text-brand-400">Set to open on:</span>
+                  <span x-text="formatDateTime(readingNote.unlockDate)"></span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Confirmation Modal -->
+      <div x-show="confirmModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" x-transition.opacity="">
+        <div class="glass rounded-2xl p-6 sm:p-8 max-w-sm w-full border border-white/10 animate-fade-in my-auto" style="animation: fadeInScale 0.3s ease-out;">
+          <div class="text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-brand-500/20 text-brand-400 mb-4 border border-brand-500/30">
+              <iconify-icon icon="solar:question-circle-linear" width="28"></iconify-icon>
+            </div>
+            <h2 class="text-lg font-semibold text-white mb-2">Open This Note?</h2>
+            <p class="text-slate-400 text-sm mb-4">
+              Open <strong x-text="confirmModal?.title" class="text-white"></strong>
+            </p>
+            <div x-show="confirmModal?.category === 'Mood-Based'" class="mb-4 p-3 rounded-lg bg-white/5 border border-white/10">
+              <p class="text-xs text-slate-400 mb-1">Unlock condition:</p>
+              <p class="text-sm text-brand-300 font-medium" x-text="confirmModal?.unlockMood"></p>
+            </div>
+            <div x-show="confirmModal?.category === 'Achievement / Event'" class="mb-4 p-3 rounded-lg bg-white/5 border border-white/10">
+              <p class="text-xs text-slate-400">This note was written for a special moment</p>
+            </div>
+            <div class="flex gap-3 flex-col sm:flex-row">
+              <button @click="cancelConfirmation()" class="flex-1 py-3 px-4 rounded-lg glass text-slate-300 hover:text-white transition-colors text-sm font-medium min-h-12 touch-manipulation active:scale-95">
+                Go Back
+              </button>
+              <button @click="confirmAndOpenNote(confirmModal)" class="flex-1 py-3 px-4 rounded-lg bg-brand-600 text-white hover:bg-brand-500 transition-colors text-sm font-medium min-h-12 touch-manipulation active:scale-95">
+                Open Note
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Modal -->
+      <div x-show="deleteConfirmModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" x-transition.opacity="">
+        <div class="glass rounded-2xl p-6 sm:p-8 max-w-sm w-full border border-white/10 animate-fade-in relative my-auto" style="animation: fadeInScale 0.3s ease-out;">
+          <button @click="cancelDeleteNote()" class="absolute top-4 left-4 text-slate-400 hover:text-white flex items-center gap-1 text-sm transition-colors min-h-12 min-w-12 touch-manipulation active:scale-95">
+            <iconify-icon icon="solar:arrow-left-linear" width="20"></iconify-icon>
+            <span>Back</span>
+          </button>
+          <div class="text-center pt-2">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500/20 text-red-400 mb-4 border border-red-500/30">
+              <iconify-icon icon="solar:trash-bin-linear" width="28"></iconify-icon>
+            </div>
+            <h2 class="text-lg font-semibold text-white mb-2">Delete This Note?</h2>
+            <p class="text-slate-400 text-sm mb-6">
+              <strong x-text="deleteConfirmModal?.title" class="text-white"></strong> will be moved to Recently Deleted. You can restore it from there.
+            </p>
+            <div class="flex gap-3 flex-col sm:flex-row">
+              <button @click="cancelDeleteNote()" class="flex-1 py-3 px-4 rounded-lg glass text-slate-300 hover:text-white transition-colors text-sm font-medium min-h-12 touch-manipulation active:scale-95">
+                Keep Note
+              </button>
+              <button @click="notesTab === 'deleted' ? permanentlyDeleteNote(deleteConfirmModal) : confirmDeleteNote(deleteConfirmModal)" class="flex-1 py-3 px-4 rounded-lg bg-red-600 text-white hover:bg-red-500 transition-colors text-sm font-medium min-h-12 touch-manipulation active:scale-95" x-text="notesTab === 'deleted' ? 'Delete Permanently' : 'Delete'">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+      // Enhanced Mood Data (3 Levels) - 19 Core Emotions
+      const moodTreeData = {
+          'Happy': {
+              'Joyful': ['Delighted', 'Cheerful', 'Elated', 'Exuberant', 'Gleeful', 'Radiant'],
+              'Grateful': ['Thankful', 'Appreciative', 'Blessed', 'Honored', 'Content', 'Satisfied'],
+              'Hopeful': ['Optimistic', 'Encouraged', 'Inspired', 'Uplifted', 'Believing', 'Eager'],
+              'Peaceful': ['Serene', 'Tranquil', 'Calm', 'Relaxed', 'At Ease', 'Grounded'],
+              'Connected': ['Loved', 'Valued', 'Belonging', 'Understood', 'Seen', 'Accepted'],
+              'Energized': ['Vibrant', 'Alive', 'Excited', 'Dynamic', 'Invigorated', 'Spirited']
+          },
+          'Sad': {
+              'Melancholic': ['Wistful', 'Nostalgic', 'Tender', 'Reflective', 'Pensive', 'Bittersweet'],
+              'Heartbroken': ['Devastated', 'Anguished', 'Shattered', 'Grieving', 'Mournful', 'Despairing'],
+              'Lonely': ['Isolated', 'Abandoned', 'Disconnected', 'Unwanted', 'Left Out', 'Forgotten'],
+              'Disappointed': ['Let Down', 'Dissatisfied', 'Unfulfilled', 'Betrayed', 'Disillusioned', 'Frustrated'],
+              'Regretful': ['Remorseful', 'Sorry', 'Ashamed', 'Guilty', 'Rueful', 'Repentant'],
+              'Hopeless': ['Defeated', 'Despondent', 'Empty', 'Hollow', 'Lost', 'Stuck']
+          },
+          'Angry': {
+              'Irritated': ['Annoyed', 'Frustrated', 'Exasperated', 'Impatient', 'Agitated', 'Vexed'],
+              'Furious': ['Enraged', 'Livid', 'Incensed', 'Irate', 'Seething', 'Explosive'],
+              'Defensive': ['Protective', 'Guarded', 'Hostile', 'Antagonistic', 'Bristling', 'Closed Off'],
+              'Bitter': ['Resentful', 'Cynical', 'Sarcastic', 'Vindictive', 'Grudging', 'Acrimonious'],
+              'Betrayed': ['Wronged', 'Violated', 'Disrespected', 'Insulted', 'Hurt', 'Outraged'],
+              'Passionate': ['Intense', 'Fired Up', 'Determined', 'Driven', 'Zealous', 'Ardent']
+          },
+          'Fearful': {
+              'Anxious': ['Worried', 'Nervous', 'Tense', 'On Edge', 'Apprehensive', 'Uneasy'],
+              'Terrified': ['Panicked', 'Petrified', 'Horrified', 'Alarmed', 'Shocked', 'Frightened'],
+              'Insecure': ['Inadequate', 'Exposed', 'Vulnerable', 'Uncertain', 'Doubtful', 'Fragile'],
+              'Overwhelmed': ['Flooded', 'Drowning', 'Suffocating', 'Trapped', 'Helpless', 'Powerless'],
+              'Paranoid': ['Suspicious', 'Distrustful', 'Wary', 'Cautious', 'Vigilant', 'Mistrustful'],
+              'Hesitant': ['Uncertain', 'Unsure', 'Reluctant', 'Wavering', 'Tentative', 'Doubtful']
+          },
+          'Calm': {
+              'Serene': ['Peaceful', 'Tranquil', 'Balanced', 'Quiet', 'Still', 'Zen'],
+              'Grounded': ['Centered', 'Stable', 'Anchored', 'Rooted', 'Solid', 'Present'],
+              'Composed': ['Collected', 'Steady', 'Poised', 'Unruffled', 'Imperturbable', 'At Peace'],
+              'Meditative': ['Reflective', 'Contemplative', 'Introspective', 'Mindful', 'Aware', 'In Flow'],
+              'Accepting': ['Content', 'Reconciled', 'Letting Go', 'Released', 'Surrendered', 'Resigned'],
+              'Detached': ['Objective', 'Impartial', 'Neutral', 'Clear', 'Unbothered', 'Unaffected']
+          },
+          'Confident': {
+              'Empowered': ['Strong', 'Capable', 'In Control', 'Mighty', 'Forceful', 'Commanding'],
+              'Proud': ['Accomplished', 'Successful', 'Worthy', 'Triumphant', 'Victorious', 'Exultant'],
+              'Assured': ['Certain', 'Self-Assured', 'Bold', 'Fearless', 'Audacious', 'Courageous'],
+              'Competent': ['Skilled', 'Able', 'Proficient', 'Expert', 'Masterful', 'Adept'],
+              'Magnetic': ['Charismatic', 'Attractive', 'Influential', 'Compelling', 'Engaging', 'Captivating'],
+              'Invincible': ['Unstoppable', 'Unbreakable', 'Resilient', 'Indomitable', 'Undefeated', 'Mighty']
+          }
+      };
+
+      const communityLetters = {
+          'Happy': "Your joy is contagious and beautiful. Let it shine brightly and inspire those around you.",
+          'Sad': "Your sadness is valid and deserves space. You are allowed to feel this, and you are not alone.",
+          'Angry': "Your anger is information. It shows you what matters. Honor it and let it guide you forward.",
+          'Fearful': "Fear means you care. Take a breath, ground yourself, and trust your inner strength.",
+          'Calm': "This peace is precious. Protect it, nurture it, and live from this centered place.",
+          'Confident': "You've got this. Trust your power and let it shine without apology or hesitation.",
+          'default': "You are navigating the complexities of being human with grace."
+      };
+
+      const themes = {
+          'Purple': { 50: '250, 245, 255', 100: '240, 180, 255', 200: '225, 130, 255', 300: '200, 80, 255', 400: '175, 30, 255', 500: '160, 10, 250', 600: '140, 5, 230', 700: '110, 2, 180', 900: '70, 1, 130', 950: '45, 0, 90', bg: '#0d001a' },
+          'Indigo': { 50: '245, 250, 255', 100: '220, 235, 255', 200: '180, 210, 255', 300: '120, 170, 255', 400: '70, 140, 255', 500: '40, 110, 255', 600: '20, 85, 250', 700: '10, 60, 220', 900: '5, 30, 150', 950: '2, 15, 100', bg: '#050820' },
+          'Lilac': { 50: '255, 245, 255', 100: '245, 210, 255', 200: '225, 150, 255', 300: '200, 90, 255', 400: '175, 40, 245', 500: '150, 10, 230', 600: '130, 5, 210', 700: '100, 2, 170', 900: '70, 1, 120', 950: '45, 0, 80', bg: '#1a0033' },
+          'Midnight': { 50: '245, 255, 255', 100: '210, 255, 255', 200: '160, 250, 255', 300: '80, 240, 255', 400: '20, 230, 255', 500: '0, 220, 250', 600: '0, 200, 240', 700: '0, 160, 210', 900: '0, 90, 150', 950: '0, 50, 100', bg: '#001a28' },
+          'Rose': { 50: '255, 252, 254', 100: '255, 240, 248', 200: '255, 220, 237', 300: '255, 200, 225', 400: '255, 170, 210', 500: '200, 100, 160', 600: '180, 70, 140', 700: '150, 40, 110', 900: '100, 20, 70', 950: '60, 5, 40', bg: '#fff3f8' },
+          'Sky': { 50: '245, 252, 255', 100: '215, 245, 255', 200: '170, 235, 255', 300: '100, 220, 255', 400: '40, 200, 255', 500: '0, 180, 255', 600: '0, 155, 250', 700: '0, 125, 220', 900: '0, 75, 160', 950: '0, 45, 110', bg: '#051530' },
+          'Emerald': { 50: '245, 255, 250', 100: '210, 255, 235', 200: '160, 255, 210', 300: '80, 255, 180', 400: '10, 255, 150', 500: '0, 250, 120', 600: '0, 230, 100', 700: '0, 200, 80', 900: '0, 130, 60', 950: '0, 80, 40', bg: '#051520' },
+          'Amber': { 50: '255, 252, 240', 100: '255, 240, 180', 200: '255, 215, 100', 300: '255, 180, 30', 400: '255, 150, 0', 500: '255, 120, 0', 600: '240, 95, 0', 700: '210, 70, 0', 900: '150, 45, 0', 950: '100, 25, 0', bg: '#330a00' },
+          'Black': { 50: '100, 116, 139', 100: '148, 163, 184', 200: '203, 213, 225', 300: '226, 232, 240', 400: '241, 245, 250', 500: '248, 250, 252', 600: '15, 23, 42', 700: '30, 41, 59', 900: '51, 65, 85', 950: '0, 0, 0', bg: '#000000' },
+          'White': { 50: '20, 25, 35', 100: '40, 50, 70', 200: '60, 75, 100', 300: '90, 110, 140', 400: '120, 140, 170', 500: '150, 170, 200', 600: '180, 200, 230', 700: '200, 220, 245', 900: '230, 240, 250', 950: '245, 250, 255', bg: '#ffffff' }
+      };
+
+      function appData() {
+          return {
+              view: 'onboarding',
+              layoutMode: 'mobile',
+              user: { name: '', theme: 'Purple', notifications: false, email: '', isSignedIn: false },
+              tempName: '',
+              tempEmail: '',
+              notes: [],
+              newNote: { title: '', body: '', category: 'Future Date', unlockDate: '', unlockMood: '' },
+              moodTree: moodTreeData,
+              moodsList: [],
+              moodLog: [],
+
+              // Mood Wheel State
+              selectedCoreMood: null,
+              selectedSecondaryMood: null,
+              selectedTertiaryMoods: [],
+              customEmotions: [],
+              customEmotionInput: '',
+              currentMood: '',
+              moodMode: 'checkin',
+              
+              // Confirmation Modal State
+              confirmModal: null,
+              
+              // Countdown timers
+              countdowns: {},
+              countdownInterval: null,
+
+              // Ready notes tracking
+              readyNotesCount: 0,
+
+              reflections: [],
+              reflectionEntry: '',
+              currentPrompt: 'What is one thing you are proud of right now?',
+              notesTab: 'unlocked',
+              readingNote: null,
+              recentlyDeleted: [],
+              deleteConfirmModal: null,
+              dailyQuote: { text: "The only way out is through.", author: "Robert Frost" },
+              quoteArchive: [],
+              unlockedNotes: [],
+              achievementPrompts: [
+                  { label: "After a test", text: "I just finished my test. I feel..." },
+                  { label: "After exam results", text: "The results are in. I want to remember this moment because..." },
+                  { label: "Before big presentation", text: "I'm about to present. Future me, I hope you crushed it by..." },
+                  { label: "Accomplished a goal", text: "I finally did it! The journey taught me..." },
+                  { label: "Need encouragement", text: "Today was tough, but I didn't give up because..." }
+              ],
+
+              initApp() {
+                  this.moodsList = Object.keys(this.moodTree);
+                  const storedUser = localStorage.getItem('unread_user');
+                  const storedNotes = localStorage.getItem('unread_notes');
+                  const storedMoodLog = localStorage.getItem('unread_mood_log');
+
+                  if (storedUser) {
+                      this.user = JSON.parse(storedUser);
+                      this.view = 'home';
+                      this.applyTheme(this.user.theme);
+                  } else {
+                      this.applyTheme('Purple');
+                  }
+                  if (storedNotes) this.notes = JSON.parse(storedNotes);
+                  this.detectLayout();
+                  if (storedMoodLog) this.moodLog = JSON.parse(storedMoodLog);
+                  const storedDeleted = localStorage.getItem('unread_deleted_notes');
+                  if (storedDeleted) this.recentlyDeleted = JSON.parse(storedDeleted);
+
+                  const today = new Date().toDateString();
+                  const lastQuoteDate = localStorage.getItem('unread_last_quote_date');
+                  if (lastQuoteDate !== today) {
+                      this.selectRandomQuote();
+                      localStorage.setItem('unread_last_quote_date', today);
+                  } else {
+                      const storedQuote = localStorage.getItem('unread_daily_quote');
+                      if (storedQuote) this.dailyQuote = JSON.parse(storedQuote);
+                  }
+                  
+                  // Start countdown timers
+                  this.startCountdownTimer();
+                  
+                  // Set up resize listener for automatic layout detection
+                  window.addEventListener('resize', () => this.detectLayout());
+              },
+
+              getTitle() {
+                  const titles = {
+                      'write': 'New Note',
+                      'open': 'Your Notes',
+                      'settings': 'Settings',
+                      'reflections': 'Journal',
+                      'mood_wheel': 'Mood Check',
+                      'mood_result': 'Support'
+                  };
+                  return titles[this.view] || 'Returned To Sender';
+              },
+
+              completeOnboarding() {
+                  this.user.name = this.tempName;
+                  this.saveUser();
+                  this.view = 'home';
+              },
+
+              saveUser() {
+                  localStorage.setItem('unread_user', JSON.stringify(this.user));
+              },
+
+              detectLayout() {
+                  // Automatically detect layout based on viewport width
+                  const width = window.innerWidth;
+                  this.layoutMode = width >= 1024 ? 'desktop' : 'mobile';
+              },
+
+              setTheme(name) {
+                  this.user.theme = name;
+                  this.applyTheme(name);
+                  this.saveUser();
+              },
+
+              applyTheme(name) {
+                  const t = themes[name] || themes['Purple'];
+                  const r = document.querySelector(':root');
+                  r.style.setProperty('--color-brand-50', t[50]);
+                  r.style.setProperty('--color-brand-100', t[100]);
+                  r.style.setProperty('--color-brand-200', t[200]);
+                  r.style.setProperty('--color-brand-300', t[300]);
+                  r.style.setProperty('--color-brand-400', t[400]);
+                  r.style.setProperty('--color-brand-500', t[500]);
+                  r.style.setProperty('--color-brand-600', t[600]);
+                  r.style.setProperty('--color-brand-700', t[700]);
+                  r.style.setProperty('--color-brand-900', t[900]);
+                  r.style.setProperty('--color-brand-950', t[950]);
+                  r.style.setProperty('--color-bg-main', t.bg);
+                  document.body.style.backgroundColor = t.bg;
+              },
+
+              openWrite() {
+                  this.resetNewNote();
+                  this.view = 'write';
+              },
+
+              resetNewNote() {
+                  this.newNote = { title: '', body: '', category: 'Future Date', unlockDate: '', unlockMood: '' };
+              },
+
+              checkAchievementPrompt(cat) {
+                  // Category changed - could add logic here for category-specific initialization
+                  // For now, just clears the body when switching categories
+                  if (cat !== 'Achievement / Event') {
+                      // Optional: reset prompts visibility on category change
+                  }
+              },
+
+              applyPrompt(prompt) {
+                  this.newNote.body = this.newNote.body ? this.newNote.body + "\n" + prompt.text : prompt.text;
+              },
+
+              openMoodSelectorForWrite() {
+                  this.moodMode = 'write';
+                  this.resetMoodSelector();
+                  this.view = 'mood_wheel';
+              },
+
+              startMoodCheckIn() {
+                  this.moodMode = 'checkin';
+                  this.resetMoodSelector();
+                  this.view = 'mood_wheel';
+              },
+
+              resetMoodSelector() {
+                  this.selectedCoreMood = null;
+                  this.selectedSecondaryMood = null;
+                  this.selectedTertiaryMoods = [];
+                  this.customEmotions = [];
+                  this.customEmotionInput = '';
+              },
+
+              selectCoreMood(mood) {
+                  this.selectedCoreMood = mood;
+                  this.selectedSecondaryMood = null;
+                  this.selectedTertiaryMoods = [];
+                  this.customEmotions = [];
+                  this.customEmotionInput = '';
+              },
+
+              selectSecondaryMood(mood) {
+                  this.selectedSecondaryMood = mood;
+                  this.selectedTertiaryMoods = [];
+                  this.customEmotions = [];
+                  this.customEmotionInput = '';
+              },
+
+              toggleTertiaryMood(mood) {
+                  if (this.selectedTertiaryMoods.includes(mood)) {
+                      this.selectedTertiaryMoods = this.selectedTertiaryMoods.filter(m => m !== mood);
+                  } else {
+                      this.selectedTertiaryMoods.push(mood);
+                  }
+              },
+
+              addCustomEmotion() {
+                  if (this.customEmotionInput.trim() && !this.customEmotions.includes(this.customEmotionInput.trim())) {
+                      this.customEmotions.push(this.customEmotionInput.trim());
+                      this.customEmotionInput = '';
+                  }
+              },
+
+              removeCustomEmotion(emotion) {
+                  this.customEmotions = this.customEmotions.filter(e => e !== emotion);
+              },
+
+              finalizeMood() {
+                  const allMoods = [...this.selectedTertiaryMoods, ...this.customEmotions];
+                  const moodsString = allMoods.join(', ');
+                  if (this.moodMode === 'write') {
+                      if (!this.newNote.title) {
+                          this.newNote.title = `Feeling: ${moodsString}`;
+                      }
+                      this.newNote.unlockMood = moodsString;
+                      this.view = 'write';
+                  } else {
+                      // Check-in mode
+                      this.moodLog.unshift({
+                          moods: allMoods,
+                          timestamp: new Date().toISOString(),
+                          core: this.selectedCoreMood
+                      });
+                      localStorage.setItem('unread_mood_log', JSON.stringify(this.moodLog));
+
+                      this.currentMood = this.selectedCoreMood; // For message display
+                      this.unlockMoodNotes(this.selectedCoreMood);
+
+                      this.view = 'mood_result';
+                  }
+              },
+
+              saveNote() {
+                  if (!this.newNote.title || !this.newNote.body) return;
+                  const note = {
+                      id: Date.now(),
+                      ...this.newNote,
+                      dateCreated: new Date().toISOString(),
+                      isLocked: true,
+                      isRead: false,
+                      isPinned: false
+                  };
+                  this.notes.unshift(note);
+                  localStorage.setItem('unread_notes', JSON.stringify(this.notes));
+                  this.view = 'home';
+              },
+
+              unlockMoodNotes(mood) {
+                  let changed = false;
+                  this.notes = this.notes.map(n => {
+                      // Simple check: if note is locked to 'Happy' and we are 'Happy'
+                      if (n.category === 'Mood-Based' && n.isLocked && n.unlockMood === mood) {
+                          changed = true;
+                          return { ...n, isLocked: false, isRead: false };
+                      }
+                      return n;
+                  });
+                  if(changed) {
+                       localStorage.setItem('unread_notes', JSON.stringify(this.notes));
+                       this.unlockedNotes = this.notes.filter(n => n.category === 'Mood-Based' && !n.isLocked && n.unlockMood === mood);
+                  }
+              },
+
+              getFilteredNotes() {
+                  this.checkDateLocks();
+                  if (this.notesTab === 'unlocked') {
+                      return this.notes.filter(n => !n.isLocked);
+                  } else if (this.notesTab === 'locked') {
+                      return this.notes.filter(n => n.isLocked);
+                  } else if (this.notesTab === 'favorites') {
+                      return this.notes.filter(n => n.isPinned);
+                  } else if (this.notesTab === 'deleted') {
+                      return this.recentlyDeleted;
+                  }
+              },
+
+              get readyToOpenCount() {
+                  const now = new Date();
+                  return this.notes.filter(n => n.category === 'Future Date' && n.unlockDate && new Date(n.unlockDate) <= now && n.isLocked === false).length;
+              },
+
+              hasUnreadReadyNotes() {
+                  const now = new Date();
+                  return this.notes.some(n => 
+                      n.category === 'Future Date' && 
+                      n.unlockDate && 
+                      new Date(n.unlockDate) <= now && 
+                      !n.isLocked &&
+                      !n.isRead
+                  );
+              },
+
+              checkDateLocks() {
+                  const now = new Date();
+                  let changed = false;
+                  this.notes = this.notes.map(n => {
+                      if (n.category === 'Future Date' && n.isLocked) {
+                          if (now >= new Date(n.unlockDate)) {
+                              changed = true;
+                              return { ...n, isLocked: false };
+                          }
+                      }
+                      return n;
+                  });
+                  if (changed) localStorage.setItem('unread_notes', JSON.stringify(this.notes));
+              },
+
+                readNote(note) {
+                  this.readingNote = note;
+                  const idx = this.notes.findIndex(n => n.id === note.id);
+                  if (idx !== -1 && !this.notes[idx].isRead) {
+                    this.notes[idx].isRead = true;
+                      // If it's a Mood-Based note, unlock it
+                      if (this.notes[idx].category === 'Mood-Based' && this.notes[idx].isLocked) {
+                          this.notes[idx].isLocked = false;
+                      }
+                    // Trigger Alpine reactivity
+                    this.notes = [...this.notes];
+                  }
+                },
+
+              saveReflection() {
+                  if (!this.reflectionEntry) return;
+                  this.reflections.unshift({ text: this.reflectionEntry, date: new Date().toISOString() });
+                  this.reflectionEntry = '';
+                  this.view = 'home';
+              },
+
+              formatDate(isoString) {
+                  if(!isoString) return '';
+                  return new Date(isoString).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+              },
+
+              formatDateTime(isoString) {
+                  if(!isoString) return '';
+                  const d = new Date(isoString);
+                  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+              },
+
+              getCommunityLetter() {
+                  return communityLetters[this.selectedCoreMood] || communityLetters['default'];
+              },
+
+              getCountdownTime(unlockDate) {
+                  const now = new Date();
+                  const unlock = new Date(unlockDate);
+                  const diff = unlock - now;
+                  
+                  if (diff <= 0) return null;
+                  
+                  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                  
+                  if (days > 0) {
+                      return `${days}d ${hours}h ${minutes}m`;
+                  } else if (hours > 0) {
+                      return `${hours}h ${minutes}m ${seconds}s`;
+                  } else {
+                      return `${minutes}m ${seconds}s`;
+                  }
+              },
+
+              getCountdownForNote(note) {
+                  return this.getCountdownTime(note.unlockDate);
+              },
+
+              openNoteWithConfirmation(note) {
+                  // For time-based notes, check if timer is up
+                  if (note.category === 'Future Date') {
+                      const now = new Date();
+                      const unlockTime = new Date(note.unlockDate);
+                      if (now < unlockTime) {
+                          return; // Don't open if timer hasn't reached zero
+                      }
+                  }
+                  
+                  // For mood/achievement notes, show confirmation
+                  if (note.category === 'Mood-Based' || note.category === 'Achievement / Event') {
+                      this.confirmModal = note;
+                  } else {
+                      // Time-based notes can be opened directly (timer is up)
+                      this.readNote(note);
+                  }
+                  // Trigger Alpine reactivity update
+                  this.notes = [...this.notes];
+              },
+
+              confirmAndOpenNote(note) {
+                  this.confirmModal = null;
+                  this.readNote(note);
+                  // Trigger Alpine reactivity update
+                  this.notes = [...this.notes];
+              },
+
+              cancelConfirmation() {
+                  this.confirmModal = null;
+              },
+
+              startCountdownTimer() {
+                  if (this.countdownInterval) clearInterval(this.countdownInterval);
+                  this.countdownInterval = setInterval(() => {
+                      // Alpine will automatically re-render on data changes
+                      this.countdowns = { ...this.countdowns };
+                  }, 1000);
+              },
+
+              deleteNote(note) {
+                  this.deleteConfirmModal = note;
+              },
+
+              confirmDeleteNote(note) {
+                  const idx = this.notes.findIndex(n => n.id === note.id);
+                  if (idx !== -1) {
+                      const deletedNote = { ...this.notes[idx], deletedAt: new Date().toISOString() };
+                      this.recentlyDeleted.unshift(deletedNote);
+                      // Keep only last 20 deleted notes
+                      if (this.recentlyDeleted.length > 20) {
+                          this.recentlyDeleted = this.recentlyDeleted.slice(0, 20);
+                      }
+                      this.notes.splice(idx, 1);
+                      localStorage.setItem('unread_notes', JSON.stringify(this.notes));
+                      localStorage.setItem('unread_deleted_notes', JSON.stringify(this.recentlyDeleted));
+                      this.deleteConfirmModal = null;
+                      this.readingNote = null;
+                      this.notes = [...this.notes];
+                  }
+              },
+
+              cancelDeleteNote() {
+                  this.deleteConfirmModal = null;
+              },
+
+              restoreNote(note) {
+                  const idx = this.recentlyDeleted.findIndex(n => n.id === note.id);
+                  if (idx !== -1) {
+                      const restoredNote = { ...this.recentlyDeleted[idx] };
+                      delete restoredNote.deletedAt;
+                      this.notes.unshift(restoredNote);
+                      this.recentlyDeleted.splice(idx, 1);
+                      localStorage.setItem('unread_notes', JSON.stringify(this.notes));
+                      localStorage.setItem('unread_deleted_notes', JSON.stringify(this.recentlyDeleted));
+                      this.notes = [...this.notes];
+                      this.recentlyDeleted = [...this.recentlyDeleted];
+                  }
+              },
+
+              permanentlyDeleteNote(note) {
+                  const idx = this.recentlyDeleted.findIndex(n => n.id === note.id);
+                  if (idx !== -1) {
+                      this.recentlyDeleted.splice(idx, 1);
+                      localStorage.setItem('unread_deleted_notes', JSON.stringify(this.recentlyDeleted));
+                      this.recentlyDeleted = [...this.recentlyDeleted];
+                  }
+              },
+
+              selectRandomQuote() {
+                  const allQuotes = [
+                      {text: "Doubt kills more dreams than failure ever will.", author: "Suzy Kassem"},
+                      {text: "You are the only one who gets to be you", author: "Unknown"},
+                      {text: "Turn your wounds into wisdom.", author: "Oprah Winfrey"},
+                      {text: "The only way out is through.", author: "Robert Frost"},
+                      {text: "A winner is a loser who tried one more time", author: "Unknown"},
+                      {text: "Push yourself, because no one else is going to do it for you.", author: "Unknown"},
+                      {text: "Sometimes we're tested not to show our weaknesses, but to discover our strengths.", author: "Unknown"},
+                      {text: "Everything will be okay in the end. If it's not okay, it's not the end.", author: "Unknown"},
+                      {text: "Even the steps you take in the dark will lead you to the light.", author: "Unknown"},
+                      {text: "Success doesn't just find you. You have to go out and get it.", author: "Unknown"},
+                      {text: "You feel trapped because you still think the cage is real.", author: "Unknown"},
+                      {text: "Don't miss the present by thinking about the past", author: "Unknown"},
+                      {text: "Dont seek victory, remove the fear of failure.", author: "Unknown"},
+                      {text: "Wake up with determination. Go to bed with satisfaction.", author: "Unknown"},
+                      {text: "It wont happen overnight, but if you quit, it will never happen.", author: "Unknown"},
+                      {text: "You don't have to be great to start, but you have to start to be great.", author: "Unknown"},
+                      {text: "It's going to be hard, but hard does not mean impossible.", author: "Unknown"},
+                      {text: "Don't wait for opportunity. Create it.", author: "Unknown"},
+                      {text: "Sometimes the smallest step in the right direction ends up being the biggest step of your life.", author: "Unknown"},
+                      {text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt"},
+                      {text: "A negative mind will never give you a positive life.", author: "Unknown"},
+                      {text: "Always love yourself, because that's the only person who will be with you for life.", author: "Unknown"}
+                  ];
+                  this.dailyQuote = allQuotes[Math.floor(Math.random() * allQuotes.length)];
+                  localStorage.setItem('unread_daily_quote', JSON.stringify(this.dailyQuote));
+              },
+
+              refreshQuote() {
+                  this.selectRandomQuote();
+              }
+          }
+      }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
