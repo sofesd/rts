@@ -270,26 +270,23 @@
 
       /* Ensure consistent text size for icons and labels */
       .icon-label {
-          font-size: 1rem; /* Default size */
-          @apply text-sm sm:text-base md:text-lg; /* Responsive scaling */
+          font-size: 1rem; /* Uniform size */
+          font-weight: 500;
       }
 
       /* Adjust text visibility for all color schemes */
       .icon-label {
-          color: var(--color-brand-500); /* Default color */
-          @apply dark:text-white; /* Ensure visibility in dark mode */
+          color: white; /* Ensure visibility across all themes */
+      }
+
+      .icon-label-secondary {
+          font-size: 0.875rem; /* Secondary text slightly smaller */
+          color: #94a3b8; /* Slate-400 for visibility */
       }
 
       /* Ensure proper alignment and spacing */
       .icon-container {
           @apply flex items-center justify-center gap-2;
-      }
-
-      /* Mobile-first adjustments */
-      @media (max-width: 640px) {
-          .icon-label {
-              font-size: 0.875rem; /* Slightly smaller for mobile */
-          }
       }
 
       /* Center mood wheel on mobile */
@@ -302,28 +299,6 @@
           margin: 0 auto;
           width: 100%;
           max-width: 300px; /* Adjust size for smaller screens */
-        }
-      }
-
-      /* Remove unnecessary blank space on mobile */
-      @media (max-width: 640px) {
-        .icon-container {
-          margin: 0 auto;
-          padding: 0;
-          display: grid;
-          grid-template-columns: repeat(3, 1fr); /* Fit icons in a grid */
-          gap: 8px; /* Adjust spacing between icons */
-        }
-
-        .icon-label {
-          font-size: 0.875rem; /* Uniform text size for mobile */
-          color: var(--color-brand-500); /* Adapt to color scheme */
-          @apply dark:text-white; /* Ensure visibility in dark mode */
-        }
-
-        body {
-          padding: 0;
-          margin: 0;
         }
       }
 
@@ -441,14 +416,14 @@
             <div class="grid gap-3 sm:gap-4" :class="layoutMode === 'desktop' ? 'grid-cols-4' : 'grid-cols-2'">
               <!-- Write -->
               <button @click="openWrite()" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
-                <div class="md:w-16 md:h-16 w-12 h-12 rounded-full bg-brand-500/20 text-brand-300 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <iconify-icon icon="solar:pen-new-square-linear" :width="layoutMode === 'desktop' ? 36 : 28"></iconify-icon>
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-brand-500/20 text-brand-300 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <iconify-icon icon="solar:pen-new-square-linear" width="24"></iconify-icon>
                 </div>
                 <div class="text-left">
-                  <span class="block text-white font-medium md:text-base text-sm">
+                  <span class="block text-white font-medium text-sm">
                     Write Note
                   </span>
-                  <span class="md:text-sm text-xs text-slate-500">
+                  <span class="text-xs text-slate-400">
                     For your future self
                   </span>
                 </div>
@@ -456,44 +431,44 @@
 
               <!-- Open -->
               <button @click="view = 'open'" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform relative flex-shrink-0">
-                  <iconify-icon icon="solar:letter-linear" width="22" class="sm:w-6"></iconify-icon>
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center group-hover:scale-110 transition-transform relative flex-shrink-0">
+                  <iconify-icon icon="solar:letter-linear" width="24"></iconify-icon>
                   <span x-show="hasUnreadReadyNotes()" class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border border-slate-900"></span>
                 </div>
                 <div class="text-left">
-                  <p class="text-xs sm:text-sm font-medium text-white">Open</p>
-                  <p class="text-[10px] sm:text-xs text-slate-400" x-text="hasUnreadReadyNotes() ? `${readyToOpenCount} ready now` : 'Read notes'"></p>
+                  <p class="text-sm font-medium text-white">Open</p>
+                  <p class="text-xs text-slate-400" x-text="hasUnreadReadyNotes() ? `${readyToOpenCount} ready now` : 'Read notes'"></p>
                 </div>
               </button>
 
               <!-- Mood -->
               <button @click="startMoodCheckIn()" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-emerald-500/10 text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                  <iconify-icon icon="solar:smile-circle-linear" width="22" class="sm:w-6"></iconify-icon>
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-500/10 text-emerald-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                  <iconify-icon icon="solar:smile-circle-linear" width="24"></iconify-icon>
                 </div>
                 <div class="text-left">
-                  <p class="text-xs sm:text-sm font-medium text-white">Mood</p>
-                  <p class="text-[10px] sm:text-xs text-slate-400">Check in</p>
+                  <p class="text-sm font-medium text-white">Mood</p>
+                  <p class="text-xs text-slate-400">Check in</p>
                 </div>
               </button>
 
               <!-- Reflections -->
               <button @click="view = 'reflections'" class="glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col items-start gap-2 sm:gap-3 md:gap-4 transition-all duration-300 group min-h-28 sm:min-h-32 touch-manipulation active:scale-95">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-rose-500/10 text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
-                  <iconify-icon icon="solar:calendar-mark-linear" width="22" class="sm:w-6"></iconify-icon>
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-rose-500/10 text-rose-300 flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                  <iconify-icon icon="solar:calendar-mark-linear" width="24"></iconify-icon>
                 </div>
                 <div class="text-left">
-                  <p class="text-xs sm:text-sm font-medium text-white">Reflect</p>
-                  <p class="text-[10px] sm:text-xs text-slate-400">Journal</p>
+                  <p class="text-sm font-medium text-white">Reflect</p>
+                  <p class="text-xs text-slate-400">Journal</p>
                 </div>
               </button>
 
               <!-- Settings -->
               <button @click="view = 'settings'" class="col-span-2 glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex items-center gap-3 sm:gap-4 md:gap-5 transition-all duration-300 min-h-24 sm:min-h-28 touch-manipulation active:scale-95" :class="layoutMode === 'desktop' ? 'col-span-4' : 'col-span-2'">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-slate-700/30 text-slate-400 flex items-center justify-center flex-shrink-0">
-                  <iconify-icon icon="solar:settings-linear" width="22" class="sm:w-6"></iconify-icon>
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-700/30 text-slate-400 flex items-center justify-center flex-shrink-0">
+                  <iconify-icon icon="solar:settings-linear" width="24"></iconify-icon>
                 </div>
-                <span class="text-slate-400 font-medium text-xs sm:text-sm md:text-base">
+                <span class="text-slate-400 font-medium text-sm">
                   Settings
                 </span>
               </button>
@@ -1683,9 +1658,6 @@
 
 </body>
 </html>
-
-
-
 
 
 
