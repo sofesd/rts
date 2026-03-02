@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -264,6 +264,43 @@
           textarea {
               min-height: 48px;
           }
+      }
+
+      /* Ensure consistent text size for icons and labels */
+      .icon-label {
+          font-size: 1rem; /* Default size */
+          @apply text-sm sm:text-base md:text-lg; /* Responsive scaling */
+      }
+
+      /* Adjust text visibility for all color schemes */
+      .icon-label {
+          color: var(--color-brand-500); /* Default color */
+          @apply dark:text-white; /* Ensure visibility in dark mode */
+      }
+
+      /* Ensure proper alignment and spacing */
+      .icon-container {
+          @apply flex items-center justify-center gap-2;
+      }
+
+      /* Mobile-first adjustments */
+      @media (max-width: 640px) {
+          .icon-label {
+              font-size: 0.875rem; /* Slightly smaller for mobile */
+          }
+      }
+
+      /* Center mood wheel on mobile */
+      .mood-wheel {
+        @apply flex items-center justify-center;
+      }
+
+      @media (max-width: 640px) {
+        .mood-wheel {
+          margin: 0 auto;
+          width: 100%;
+          max-width: 300px; /* Adjust size for smaller screens */
+        }
       }
 
     </style>
@@ -1622,6 +1659,8 @@
 
 </body>
 </html>
+
+
 
 
 
