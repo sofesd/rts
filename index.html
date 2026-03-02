@@ -564,6 +564,17 @@
                 </div>
               </button>
 
+              <!-- Private Journal -->
+              <button @click="openPrivateJournal()" class="col-span-2 glass glass-hover glass-active p-4 sm:p-5 md:p-6 rounded-2xl flex items-center gap-3 sm:gap-4 transition-all duration-300 min-h-20 sm:min-h-24 touch-manipulation active:scale-95" :class="layoutMode === 'desktop' ? 'col-span-4' : 'col-span-2'">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-500/10 text-purple-300 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <iconify-icon icon="solar:lock-bold" width="20"></iconify-icon>
+                </div>
+                <div class="text-left">
+                  <p class="text-sm font-medium text-white">Private Dream Journal</p>
+                  <p class="text-xs text-slate-400">Password protected</p>
+                </div>
+              </button>
+
               <!-- Settings -->
               <button @click="view = 'settings'" class="col-span-2 glass glass-hover glass-active p-5 sm:p-6 md:p-8 rounded-2xl flex items-center gap-3 sm:gap-4 md:gap-5 transition-all duration-300 min-h-24 sm:min-h-28 touch-manipulation active:scale-95" :class="layoutMode === 'desktop' ? 'col-span-4' : 'col-span-2'">
                 <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-700/30 text-slate-400 flex items-center justify-center flex-shrink-0">
@@ -996,6 +1007,86 @@
             </div>
           </div>
 
+          <!-- PRIVATE JOURNAL VIEW -->
+          <div x-show="view === 'private-journal'" class="space-y-4 animate-fade-in pb-8" :class="layoutMode === 'desktop' ? 'max-w-3xl mx-auto' : 'max-w-lg mx-auto'">
+            <!-- Auth Modal -->
+            <div x-show="!privateJournalAuth" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div class="glass rounded-2xl p-6 sm:p-8 max-w-sm w-full space-y-6 animate-slide-up">
+                <div class="text-center">
+                  <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500/20 text-purple-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <iconify-icon icon="solar:lock-bold" width="32"></iconify-icon>
+                  </div>
+                  <h2 class="text-xl sm:text-2xl font-semibold text-white mb-2">Private Journal</h2>
+                  <p class="text-xs sm:text-sm text-slate-400">Enter your password to access</p>
+                </div>
+                
+                <div>
+                  <label class="text-xs text-slate-400 block mb-2">Password</label>
+                  <input type="password" x-model="privateJournalAuthPassword" @keydown.enter="authenticatePrivateJournal()" class="w-full glass rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/50 transition-all text-sm" placeholder="Enter password">
+                </div>
+
+                <div class="flex gap-3">
+                  <button @click="view = 'home'" class="flex-1 px-4 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 text-sm font-medium transition-colors">Cancel</button>
+                  <button @click="authenticatePrivateJournal()" class="flex-1 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-colors">Unlock</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Entry Form -->
+            <div x-show="privateJournalAuth" class="space-y-4">
+              <!-- Date Display -->
+              <div class="text-center py-4">
+                <p class="text-slate-400 text-sm">Today is</p>
+                <p class="text-2xl sm:text-3xl font-semibold text-white" x-text="formatDate(new Date())"></p>
+              </div>
+
+              <!-- Normal Entry -->
+              <div class="glass rounded-xl p-4 sm:p-6 space-y-3">
+                <div class="flex items-center gap-2">
+                  <iconify-icon icon="solar:book-linear" class="text-indigo-300" width="20"></iconify-icon>
+                  <h3 class="text-white font-medium">Today's Entry</h3>
+                </div>
+                <textarea x-model="privateJournalCurrentEntry.normalEntry" placeholder="What happened today? How did you feel?" class="w-full glass rounded-lg px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/50 transition-all text-sm resize-none h-24 sm:h-32"></textarea>
+              </div>
+
+              <!-- Dream Entry -->
+              <div class="glass rounded-xl p-4 sm:p-6 space-y-3">
+                <div class="flex items-center gap-2">
+                  <iconify-icon icon="solar:moon-sleep-linear" class="text-purple-300" width="20"></iconify-icon>
+                  <h3 class="text-white font-medium">Dream Journal</h3>
+                </div>
+                <textarea x-model="privateJournalCurrentEntry.dreamEntry" placeholder="Did you have any dreams? What do you remember?" class="w-full glass rounded-lg px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/50 transition-all text-sm resize-none h-24 sm:h-32"></textarea>
+              </div>
+
+              <!-- Save Button -->
+              <div class="flex gap-3">
+                <button @click="privateJournalAuth = false; view = 'home'" class="flex-1 px-4 py-3 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 font-medium transition-colors">Back</button>
+                <button @click="savePrivateJournalEntry()" class="flex-1 px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-medium transition-colors flex items-center justify-center gap-2">
+                  <iconify-icon icon="solar:check-circle-linear" width="18"></iconify-icon>
+                  Save Entry
+                </button>
+              </div>
+
+              <!-- Recent Entries -->
+              <div x-show="privateJournalEntries.length > 0" class="space-y-3 mt-6 pt-6 border-t border-white/10">
+                <h3 class="text-white font-medium">Recent Entries</h3>
+                <div class="space-y-2 max-h-48 overflow-y-auto">
+                  <template x-for="entry in privateJournalEntries.slice().reverse().slice(0, 5)">
+                    <div class="glass rounded-lg p-3 text-xs flex items-start justify-between gap-2">
+                      <div class="cursor-pointer hover:opacity-80 transition-opacity flex-1" @click="loadPrivateJournalEntry(entry)">
+                        <p class="text-slate-400" x-text="formatDate(entry.date)"></p>
+                        <p class="text-slate-300 line-clamp-2" x-text="entry.normalEntry || '(No entry)'"></p>
+                      </div>
+                      <button @click.stop="deletePrivateJournalEntry(entry)" class="flex-shrink-0 p-1 rounded hover:bg-red-500/10 text-red-400 hover:text-red-300 transition-colors" title="Delete entry">
+                        <iconify-icon icon="solar:trash-bin-linear" width="16"></iconify-icon>
+                      </button>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- SETTINGS VIEW -->
           <div x-show="view === 'settings'" class="space-y-8 animate-fade-in" :class="layoutMode === 'desktop' ? 'max-w-2xl mx-auto' : 'max-w-lg mx-auto'">
             <!-- Profile -->
@@ -1032,24 +1123,29 @@
               <!-- Sign In Section -->
               <div x-show="!user.isSignedIn" class="space-y-3">
                 <p class="text-xs text-slate-400 mb-3">Sign in to receive unlock reminders and notifications</p>
-                <button @click="user.isSignedIn = true; user.email = 'google@example.com'; user.notifications = true; saveUser()" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg glass hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all text-sm font-medium group min-h-12 touch-manipulation active:scale-95">
-                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                  </svg>
-                  Continue with Google
-                </button>
-                <div class="relative flex items-center gap-3">
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
-                  <span class="text-xs text-slate-500">or</span>
-                  <div class="flex-1 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
-                </div>
-                <input type="email" x-model="tempEmail" placeholder="Enter your email" class="w-full glass rounded-lg px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none border border-white/5 focus:border-brand-500/50 transition-all min-h-12">
-                <button @click="user.isSignedIn = true; user.email = tempEmail; user.notifications = true; saveUser(); tempEmail = ''" :disabled="!tempEmail || !tempEmail.includes('@')" class="w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-12 touch-manipulation active:scale-95">
+                <button @click="emailSignInModal = true" class="w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-sm font-medium transition-colors min-h-12 touch-manipulation active:scale-95">
                   Sign In with Email
                 </button>
+
+                <!-- Email Sign In Modal -->
+                <div x-show="emailSignInModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                  <div class="glass rounded-2xl p-6 sm:p-8 max-w-sm w-full space-y-6 animate-slide-up">
+                    <div class="text-center">
+                      <h2 class="text-xl sm:text-2xl font-semibold text-white mb-2">Sign In</h2>
+                      <p class="text-xs sm:text-sm text-slate-400">Enter your email for notifications</p>
+                    </div>
+                    
+                    <div>
+                      <label class="text-xs text-slate-400 block mb-2">Email Address</label>
+                      <input type="email" x-model="emailSignInInput" @keydown.enter="completeEmailSignIn()" class="w-full glass rounded-xl px-4 py-3 text-white placeholder-slate-600 focus:outline-none focus:border-brand-500/50 focus:ring-1 focus:ring-brand-500/50 transition-all text-sm" placeholder="your@email.com">
+                    </div>
+
+                    <div class="flex gap-3">
+                      <button @click="emailSignInModal = false; emailSignInInput = ''" class="flex-1 px-4 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 text-sm font-medium transition-colors">Cancel</button>
+                      <button @click="completeEmailSignIn()" :disabled="!emailSignInInput || !emailSignInInput.includes('@')" class="flex-1 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors">Continue</button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- Notifications Toggle (after sign in) -->
@@ -1071,6 +1167,49 @@
                 <button @click="user.isSignedIn = false; user.email = ''; user.notifications = false; saveUser()" class="w-full text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 px-3 py-3 rounded-lg transition-colors border border-red-500/20 min-h-12 touch-manipulation active:scale-95">
                   Sign Out
                 </button>
+              </div>
+            </div>
+
+            <!-- Private Journal Password -->
+            <div class="space-y-3">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                Private Journal
+              </h3>
+              <div x-show="!privateJournalPassword" class="space-y-3">
+                <p class="text-xs text-slate-400">Set a password to protect your private journal entries</p>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Create Password</label>
+                  <input type="password" x-model="newPrivatePassword" class="w-full glass rounded-lg px-3 py-3 text-sm text-white focus:outline-none border-transparent focus:border-brand-500 transition-colors min-h-12" placeholder="Enter a strong password">
+                </div>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Confirm Password</label>
+                  <input type="password" x-model="confirmNewPrivatePassword" class="w-full glass rounded-lg px-3 py-3 text-sm text-white focus:outline-none border-transparent focus:border-brand-500 transition-colors min-h-12" placeholder="Confirm password">
+                </div>
+                <button @click="setPrivateJournalPassword()" :disabled="!newPrivatePassword || newPrivatePassword !== confirmNewPrivatePassword" class="w-full px-4 py-3 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors min-h-12 touch-manipulation active:scale-95">
+                  Set Password
+                </button>
+              </div>
+              <div x-show="privateJournalPassword" class="space-y-3">
+                <div class="p-3 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs text-brand-300 flex items-center gap-2">
+                  <iconify-icon icon="solar:check-circle-bold" class="text-brand-400" width="16"></iconify-icon>
+                  Password protected
+                </div>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Change Password</label>
+                  <input type="password" x-model="newPrivatePassword" class="w-full glass rounded-lg px-3 py-3 text-sm text-white focus:outline-none border-transparent focus:border-brand-500 transition-colors min-h-12" placeholder="New password (leave empty to keep current)">
+                </div>
+                <div>
+                  <label class="text-xs text-slate-400 block mb-1">Confirm New Password</label>
+                  <input type="password" x-model="confirmNewPrivatePassword" class="w-full glass rounded-lg px-3 py-3 text-sm text-white focus:outline-none border-transparent focus:border-brand-500 transition-colors min-h-12" placeholder="Confirm new password">
+                </div>
+                <div class="flex gap-2">
+                  <button @click="newPrivatePassword = ''; confirmNewPrivatePassword = ''" class="flex-1 px-3 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 text-xs font-medium transition-colors min-h-10">
+                    Cancel
+                  </button>
+                  <button @click="setPrivateJournalPassword()" :disabled="!newPrivatePassword || newPrivatePassword !== confirmNewPrivatePassword" class="flex-1 px-3 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-medium transition-colors min-h-10">
+                    Update Password
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1298,6 +1437,8 @@
               readingNote: null,
               recentlyDeleted: [],
               deleteConfirmModal: null,
+              emailSignInModal: false,
+              emailSignInInput: '',
               dailyQuote: { text: "The only way out is through.", author: "Robert Frost" },
               quoteArchive: [],
               unlockedNotes: [],
@@ -1308,6 +1449,17 @@
                   { label: "Accomplished a goal", text: "I finally did it! The journey taught me..." },
                   { label: "Need encouragement", text: "Today was tough, but I didn't give up because..." }
               ],
+
+              // Private Journal Data
+              privateJournalPassword: '',
+              privateJournalAuth: false,
+              privateJournalEntryPassword: '',
+              privateJournalEntries: [],
+              privateJournalCurrentEntry: { normalEntry: '', dreamEntry: '', date: '' },
+              privateJournalShow: false,
+              privateJournalAuthPassword: '',
+              newPrivatePassword: '',
+              confirmNewPrivatePassword: '',
 
               initApp() {
                   this.moodsList = Object.keys(this.moodTree);
@@ -1340,6 +1492,9 @@
                   
                   // Start countdown timers
                   this.startCountdownTimer();
+                  
+                  // Initialize private journal
+                  this.initPrivateJournal();
                   
                   // Set up resize listener for automatic layout detection
                   window.addEventListener('resize', () => this.detectLayout());
@@ -1753,7 +1908,131 @@
 
               refreshQuote() {
                   this.selectRandomQuote();
-              }
+              },
+
+              openPrivateJournal() {
+                  if (this.privateJournalPassword) {
+                      this.privateJournalAuth = false;
+                      this.privateJournalAuthPassword = '';
+                      this.view = 'private-journal';
+                  } else {
+                      this.view = 'private-journal';
+                      this.privateJournalAuth = true;
+                      this.privateJournalCurrentEntry = { normalEntry: '', dreamEntry: '', date: new Date().toISOString() };
+                  }
+              },
+
+              authenticatePrivateJournal() {
+                  if (!this.privateJournalPassword) {
+                      alert('Please set a password first in settings');
+                      return;
+                  }
+                  // Simple password check (in production, use proper hashing)
+                  if (this.privateJournalAuthPassword === this.privateJournalPassword) {
+                      this.privateJournalAuth = true;
+                      this.privateJournalAuthPassword = '';
+                      this.privateJournalCurrentEntry = { normalEntry: '', dreamEntry: '', date: new Date().toISOString() };
+                      this.loadTodayEntry();
+                  } else {
+                      alert('Incorrect password');
+                      this.privateJournalAuthPassword = '';
+                  }
+              },
+
+              loadTodayEntry() {
+                  const today = new Date().toDateString();
+                  const todayEntry = this.privateJournalEntries.find(e => new Date(e.date).toDateString() === today);
+                  if (todayEntry) {
+                      this.privateJournalCurrentEntry = { ...todayEntry };
+                  } else {
+                      this.privateJournalCurrentEntry = { normalEntry: '', dreamEntry: '', date: new Date().toISOString() };
+                  }
+              },
+
+              savePrivateJournalEntry() {
+                  if (!this.privateJournalCurrentEntry.normalEntry && !this.privateJournalCurrentEntry.dreamEntry) {
+                      alert('Please write something before saving');
+                      return;
+                  }
+                  
+                  const today = new Date().toDateString();
+                  const existingIndex = this.privateJournalEntries.findIndex(
+                      e => new Date(e.date).toDateString() === today
+                  );
+
+                  if (existingIndex !== -1) {
+                      this.privateJournalEntries[existingIndex] = { ...this.privateJournalCurrentEntry };
+                  } else {
+                      this.privateJournalEntries.unshift({ ...this.privateJournalCurrentEntry });
+                  }
+                  
+                  // Keep only last 100 entries
+                  if (this.privateJournalEntries.length > 100) {
+                      this.privateJournalEntries = this.privateJournalEntries.slice(0, 100);
+                  }
+                  
+                  localStorage.setItem('unread_private_journal', JSON.stringify(this.privateJournalEntries));
+                  alert('Entry saved!');
+                  this.privateJournalAuth = false;
+                  this.view = 'home';
+              },
+
+              loadPrivateJournalEntry(entry) {
+                  this.privateJournalCurrentEntry = { ...entry };
+              },
+
+              deletePrivateJournalEntry(entry) {
+                  if (confirm('Are you sure you want to delete this entry?')) {
+                      const idx = this.privateJournalEntries.findIndex(e => e.date === entry.date);
+                      if (idx !== -1) {
+                          this.privateJournalEntries.splice(idx, 1);
+                          localStorage.setItem('unread_private_journal', JSON.stringify(this.privateJournalEntries));
+                          this.privateJournalEntries = [...this.privateJournalEntries];
+                      }
+                  }
+              },
+
+              setPrivateJournalPassword() {
+                  if (!this.newPrivatePassword || !this.confirmNewPrivatePassword) {
+                      alert('Please fill in both password fields');
+                      return;
+                  }
+                  if (this.newPrivatePassword !== this.confirmNewPrivatePassword) {
+                      alert('Passwords do not match');
+                      return;
+                  }
+                  if (this.newPrivatePassword.length < 4) {
+                      alert('Password must be at least 4 characters');
+                      return;
+                  }
+                  
+                  this.privateJournalPassword = this.newPrivatePassword;
+                  this.newPrivatePassword = '';
+                  this.confirmNewPrivatePassword = '';
+                  localStorage.setItem('unread_private_journal_password', this.privateJournalPassword);
+                  alert('Password ' + (this.privateJournalPassword ? 'updated' : 'set') + ' successfully!');
+              },
+
+              initPrivateJournal() {
+                  const storedPassword = localStorage.getItem('unread_private_journal_password');
+                  const storedEntries = localStorage.getItem('unread_private_journal');
+                  if (storedPassword) this.privateJournalPassword = storedPassword;
+                  if (storedEntries) this.privateJournalEntries = JSON.parse(storedEntries);
+              },
+
+              completeEmailSignIn() {
+                  if (!this.emailSignInInput || !this.emailSignInInput.includes('@')) {
+                      alert('Please enter a valid email address');
+                      return;
+                  }
+                  this.user.isSignedIn = true;
+                  this.user.email = this.emailSignInInput;
+                  this.user.notifications = true;
+                  this.saveUser();
+                  this.emailSignInModal = false;
+                  this.emailSignInInput = '';
+              },
+
           }
       }
     </script>
