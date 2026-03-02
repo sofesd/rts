@@ -276,12 +276,20 @@
 
       /* Adjust text visibility for all color schemes */
       .icon-label {
-          color: white; /* Ensure visibility across all themes */
+          color: white; /* Default for dark themes */
+      }
+
+      body.light-theme .icon-label {
+          color: #1e293b; /* Dark blue-gray for light backgrounds */
       }
 
       .icon-label-secondary {
           font-size: 0.875rem; /* Secondary text slightly smaller */
-          color: #94a3b8; /* Slate-400 for visibility */
+          color: #94a3b8; /* Slate-400 for dark themes */
+      }
+
+      body.light-theme .icon-label-secondary {
+          color: #64748b; /* Slate-500 for light themes */
       }
 
       /* Ensure proper alignment and spacing */
@@ -302,9 +310,102 @@
         }
       }
 
+      /* Light theme text visibility */
+      body[data-theme="White"],
+      body[data-theme="Rose"] {
+          color: #1e293b; /* Dark text for light backgrounds */
+      }
+
+      body[data-theme="White"] .text-white,
+      body[data-theme="Rose"] .text-white {
+          color: #0f172a !important; /* Very dark for white background */
+      }
+
+      body[data-theme="White"] .text-slate-300,
+      body[data-theme="Rose"] .text-slate-300,
+      body[data-theme="White"] .text-slate-400,
+      body[data-theme="Rose"] .text-slate-400 {
+          color: #475569 !important; /* Dark slate */
+      }
+
+      body[data-theme="White"] .text-slate-500,
+      body[data-theme="Rose"] .text-slate-500 {
+          color: #64748b !important; /* Medium slate */
+      }
+
+      body[data-theme="White"] .glass,
+      body[data-theme="Rose"] .glass {
+          background: rgba(255, 255, 255, 0.7) !important;
+          border-color: rgba(0, 0, 0, 0.1) !important;
+      }
+
+      body[data-theme="White"] p,
+      body[data-theme="Rose"] p,
+      body[data-theme="White"] span,
+      body[data-theme="Rose"] span {
+          color: #1e293b;
+      }
+
+      body[data-theme="White"] h1,
+      body[data-theme="Rose"] h1,
+      body[data-theme="White"] h2,
+      body[data-theme="Rose"] h2,
+      body[data-theme="White"] h3,
+      body[data-theme="Rose"] h3 {
+          color: #0f172a;
+      }
+
+      /* Light theme input styling */
+      body[data-theme="White"] input,
+      body[data-theme="Rose"] input,
+      body[data-theme="White"] textarea,
+      body[data-theme="Rose"] textarea {
+          background-color: rgba(255, 255, 255, 0.8) !important;
+          border-color: rgba(0, 0, 0, 0.15) !important;
+          color: #0f172a !important;
+      }
+
+      body[data-theme="White"] input::placeholder,
+      body[data-theme="Rose"] input::placeholder,
+      body[data-theme="White"] textarea::placeholder,
+      body[data-theme="Rose"] textarea::placeholder {
+          color: #94a3b8 !important; /* Light gray placeholder */
+      }
+
+      /* Light theme button styling */
+      body[data-theme="White"] button,
+      body[data-theme="Rose"] button {
+          color: #0f172a !important;
+      }
+
+      body[data-theme="White"] .bg-brand-500,
+      body[data-theme="Rose"] .bg-brand-500 {
+          background-color: rgba(168, 85, 247, 0.8) !important;
+          color: white !important;
+      }
+
+      /* Mobile responsiveness - ensure no extra padding/margin */
+      @media (max-width: 640px) {
+          body {
+              padding: 0;
+              margin: 0;
+          }
+          
+          .px-4,
+          .px-6 {
+              padding-left: 1rem;
+              padding-right: 1rem;
+          }
+          
+          /* Ensure text fits on mobile */
+          p, span, button {
+              word-break: break-word;
+          }
+      }
+
     </style>
 </head>
-<body class="antialiased min-h-screen relative overflow-x-hidden overflow-y-auto selection:bg-brand-500/30 selection:text-white transition-colors duration-500" x-data="appData()" x-init="initApp()" :class="user.solidBackground ? 'bg-slate-950' : 'bg-[#020617]'" style="background-color: var(--color-bg-main); -webkit-font-smoothing: antialiased;">
+<body class="antialiased min-h-screen relative overflow-x-hidden overflow-y-auto selection:bg-brand-500/30 selection:text-white transition-colors duration-500" x-data="appData()" x-init="initApp()" :class="user.solidBackground ? 'bg-slate-950' : 'bg-[#020617]'" :data-theme="user.theme" style="background-color: var(--color-bg-main); -webkit-font-smoothing: antialiased;">
       <!-- Onboarding Screen -->
       <div x-show="view === 'onboarding'" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute inset-0 z-50 flex flex-col items-center justify-center p-8 bg-slate-950/95 backdrop-blur-xl text-center">
         <div class="mb-8 relative group">
@@ -1293,6 +1394,7 @@
                   r.style.setProperty('--color-brand-950', t[950]);
                   r.style.setProperty('--color-bg-main', t.bg);
                   document.body.style.backgroundColor = t.bg;
+                  document.body.setAttribute('data-theme', name);
               },
 
               openWrite() {
