@@ -89,6 +89,8 @@
           background-color: #020617;
           color: #e2e8f0;
           -webkit-tap-highlight-color: transparent;
+          padding: 0;
+          margin: 0;
       }
 
       /* Glassmorphism */
@@ -300,6 +302,28 @@
           margin: 0 auto;
           width: 100%;
           max-width: 300px; /* Adjust size for smaller screens */
+        }
+      }
+
+      /* Remove unnecessary blank space on mobile */
+      @media (max-width: 640px) {
+        .icon-container {
+          margin: 0 auto;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr); /* Fit icons in a grid */
+          gap: 8px; /* Adjust spacing between icons */
+        }
+
+        .icon-label {
+          font-size: 0.875rem; /* Uniform text size for mobile */
+          color: var(--color-brand-500); /* Adapt to color scheme */
+          @apply dark:text-white; /* Ensure visibility in dark mode */
+        }
+
+        body {
+          padding: 0;
+          margin: 0;
         }
       }
 
@@ -1659,6 +1683,7 @@
 
 </body>
 </html>
+
 
 
 
