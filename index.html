@@ -1142,7 +1142,7 @@
 
                     <div class="flex gap-3">
                       <button @click="emailSignInModal = false; emailSignInInput = ''" class="flex-1 px-4 py-2 rounded-lg bg-slate-700/30 hover:bg-slate-700/50 text-slate-400 text-sm font-medium transition-colors">Cancel</button>
-                      <button @click="completeEmailSignIn()" :disabled="!emailSignInInput || !emailSignInInput.includes('@')" class="flex-1 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors">Continue</button>
+                      <button @click="completeEmailSignIn()" :disabled="!emailSignInInput || !emailSignInInput.includes('@')" class="flex-1 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium transition-colors">Verify</button>
                     </div>
                   </div>
                 </div>
@@ -2031,6 +2031,7 @@
                   this.saveUser();
                   this.emailSignInModal = false;
                   this.emailSignInInput = '';
+                  alert('Email sent! Please check your inbox or spam folder.');
               },
 
           }
