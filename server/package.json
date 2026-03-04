@@ -1,0 +1,30 @@
+{
+  "name": "returned-to-sender-reminder-service",
+  "version": "1.0.0",
+  "description": "Automated email reminder system for Returned To Sender notes",
+  "main": "dist/reminder-service.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch server/reminder-service.ts",
+    "build": "tsc",
+    "start": "node dist/reminder-service.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "resend": "^0.23.0",
+    "express": "^4.18.2",
+    "node-cron": "^3.0.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/express": "^4.17.21",
+    "@types/node-cron": "^3.0.9",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

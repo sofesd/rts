@@ -1,0 +1,51 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "notes",
+      "queryScope": "Collection",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unlockDate",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isLocked",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notes",
+      "queryScope": "Collection",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unlockDate",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notes",
+      "queryScope": "Collection",
+      "fields": [
+        {
+          "fieldPath": "unlockDate",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isLocked",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
